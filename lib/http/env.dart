@@ -1,10 +1,8 @@
 // ENVIRONMENT VARIABLES
 //API URL
-const String API_URL =
-    'https://68e9-102-134-149-153.in.ngrok.io/insomnis/public/api'; //no last /
+const String API_URL = 'https://www.insomnislifestyle.com/api'; //no last /
 
-const String media_url =
-    'https://68e9-102-134-149-153.in.ngrok.io/insomnis/public/';
+const String media_url = 'https://www.insomnislifestyle.com/';
 
 const String paypalClientId =
     'AT9SxYD7l04o-YYnkvh76MQUBp6yq-mqBIea1cBZ8OF5_t6Ib5BDZfjujFUlO3wvv9fJXPko2ljOhhBw'; //sandbox

@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:brokerstreet/screens/EventsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +29,7 @@ const TokenBox = "token";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
   await initialize();
   await Hive.initFlutter();
   await Hive.openBox(UserRegBox);
@@ -52,17 +55,26 @@ class MyApp extends StatelessWidget {
     ]);
     return Observer(
       builder: (_) => MaterialApp(
-          scrollBehavior: SBehavior(),
-          navigatorKey: navigatorKey,
-          title: 'Insomnis',
-          debugShowCheckedModeBanner: true,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-          home: SVDashboardScreen()
-          // home: status ? SVDashboardScreen() : SVSplashScreen(),
-          ),
+        scrollBehavior: SBehavior(),
+        navigatorKey: navigatorKey,
+        title: 'Insomnis',
+        debugShowCheckedModeBanner: true,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+        // home: SVDashboardScreen()
+        home: status ? SVDashboardScreen() : SVSplashScreen(),
+      ),
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
 
