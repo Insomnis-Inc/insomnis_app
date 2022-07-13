@@ -145,7 +145,7 @@ class _SVHomeFragmentState extends State<SVHomeFragment> {
         ],
       ),
       drawer: Drawer(
-        backgroundColor: context.cardColor,
+        // backgroundColor: context.cardColor,
         child: SVHomeDrawerComponent(),
       ),
       // body: SafeArea(

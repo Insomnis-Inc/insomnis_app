@@ -39,7 +39,7 @@ dependencies:
   # html: ^0.15.0
 
   # Common packages
-  google_fonts: ^2.3.1
+  google_fonts: 
   # dependencies:
   package_info_plus: ^1.4.2
 
@@ -56,9 +56,9 @@ dependencies:
   hive: ^2.2.1
   hive_flutter: ^1.1.0
   eva_icons_flutter: ^3.1.0
-  dropdown_button2: ^1.4.0
-  flutter_native_splash: ^2.1.6
-  cached_network_image: ^3.2.0
+  dropdown_button2: 
+  flutter_native_splash: 
+  cached_network_image: 
   
 
 dev_dependencies:

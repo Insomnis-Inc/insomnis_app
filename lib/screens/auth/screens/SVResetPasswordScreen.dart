@@ -33,15 +33,15 @@ class SVResetPasswordScreen extends StatelessWidget {
                     textFieldType: TextFieldType.PASSWORD,
                     textStyle: boldTextStyle(),
                     suffixIconColor: svGetBodyColor(),
-                    suffixPasswordInvisibleWidget: Image.asset(
-                            'images/socialv/icons/ic_Hide.png',
-                            height: 16,
-                            width: 16,
-                            fit: BoxFit.fill)
-                        .paddingSymmetric(vertical: 16, horizontal: 14),
-                    suffixPasswordVisibleWidget:
-                        svRobotoText(text: 'Show', color: SVAppColorPrimary)
-                            .paddingOnly(top: 20),
+                    // suffixPasswordInvisibleWidget: Image.asset(
+                    //         'images/socialv/icons/ic_Hide.png',
+                    //         height: 16,
+                    //         width: 16,
+                    //         fit: BoxFit.fill)
+                    //     .paddingSymmetric(vertical: 16, horizontal: 14),
+                    // suffixPasswordVisibleWidget:
+                    //     svRobotoText(text: 'Show', color: SVAppColorPrimary)
+                    //         .paddingOnly(top: 20),
                     decoration: svInputDecoration(
                       context,
                       label: 'New Password',
@@ -55,15 +55,15 @@ class SVResetPasswordScreen extends StatelessWidget {
                     textFieldType: TextFieldType.PASSWORD,
                     textStyle: boldTextStyle(),
                     suffixIconColor: svGetBodyColor(),
-                    suffixPasswordInvisibleWidget: Image.asset(
-                            'images/socialv/icons/ic_Hide.png',
-                            height: 16,
-                            width: 16,
-                            fit: BoxFit.fill)
-                        .paddingSymmetric(vertical: 16, horizontal: 14),
-                    suffixPasswordVisibleWidget:
-                        svRobotoText(text: 'Show', color: SVAppColorPrimary)
-                            .paddingOnly(top: 20),
+                    // suffixPasswordInvisibleWidget: Image.asset(
+                    //         'images/socialv/icons/ic_Hide.png',
+                    //         height: 16,
+                    //         width: 16,
+                    //         fit: BoxFit.fill)
+                    //     .paddingSymmetric(vertical: 16, horizontal: 14),
+                    // suffixPasswordVisibleWidget:
+                    //     svRobotoText(text: 'Show', color: SVAppColorPrimary)
+                    //         .paddingOnly(top: 20),
                     decoration: svInputDecoration(
                       context,
                       label: 'Confirm Password',
