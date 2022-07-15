@@ -85,6 +85,10 @@ Container outlineButton(
   );
 }
 
+OutlineInputBorder outlineInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8),
+    borderSide: BorderSide(color: SHIMMER_DARK));
+
 // ranges from 0.0 to 1.0
 Color darken(Color color, [double amount = .1]) {
   assert(amount >= 0 && amount <= 1);

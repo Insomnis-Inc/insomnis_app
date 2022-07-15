@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:brokerstreet/auth/intro.dart';
 import 'package:brokerstreet/screens/EventsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: SCAFFOLD_BG,
+      statusBarColor: Colors.transparent,
     ));
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -55,16 +56,16 @@ class MyApp extends StatelessWidget {
     ]);
     return Observer(
       builder: (_) => MaterialApp(
-        scrollBehavior: SBehavior(),
-        navigatorKey: navigatorKey,
-        title: 'Insomnis',
-        debugShowCheckedModeBanner: true,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-        // home: SVDashboardScreen()
-        home: status ? SVDashboardScreen() : SVSplashScreen(),
-      ),
+          scrollBehavior: SBehavior(),
+          navigatorKey: navigatorKey,
+          title: 'Insomnis',
+          debugShowCheckedModeBanner: true,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          home: IntroPage()
+          // home: status ? SVDashboardScreen() : SVSplashScreen(),
+          ),
     );
   }
 }
