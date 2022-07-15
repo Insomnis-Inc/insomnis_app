@@ -1,4 +1,4 @@
-package com.kordgramllc.brokerstreet
+package io.insomnisinc.insomnis
 
 import io.flutter.embedding.android.FlutterActivity
 

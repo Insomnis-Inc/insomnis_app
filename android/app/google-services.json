@@ -1,107 +1,33 @@
 {
   "project_info": {
-    "project_number": "315093075278",
-    "project_id": "events-8418b",
-    "storage_bucket": "events-8418b.appspot.com"
+    "project_number": "1002835933232",
+    "project_id": "insomnis",
+    "storage_bucket": "insomnis.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:315093075278:android:a5654e7acf975e69ac0a1f",
+        "mobilesdk_app_id": "1:1002835933232:android:5744bc85d2e14b16a3d5f5",
         "android_client_info": {
-          "package_name": "com.insomnis.client"
+          "package_name": "io.insomnisinc.insomnis"
         }
       },
       "oauth_client": [
         {
-          "client_id": "315093075278-vsp8ss7jl61tma5dui23510ntsk90clj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.insomnis.client",
-            "certificate_hash": "9e4d6488dd670d4cd2442b7af39f070e9103df5f"
-          }
-        },
-        {
-          "client_id": "315093075278-qnlc4k32v194svrb36oeh06bggpgohck.apps.googleusercontent.com",
+          "client_id": "1002835933232-eha70gnp9qlvjpcndqrr5s3kq73rufkm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDEhfy2DuOIKKxS9ahJJgwIplZUG4rU66Q"
+          "current_key": "AIzaSyBpxrnIXkZ-LIXfroouKb9lXso0rGb6BEM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "315093075278-qnlc4k32v194svrb36oeh06bggpgohck.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:315093075278:android:dd933951ad66b743ac0a1f",
-        "android_client_info": {
-          "package_name": "com.insomnis.insomnis"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "315093075278-u8aj657lauc7skgb41jglgu33u3g7dbv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.insomnis.insomnis",
-            "certificate_hash": "9e4d6488dd670d4cd2442b7af39f070e9103df5f"
-          }
-        },
-        {
-          "client_id": "315093075278-qnlc4k32v194svrb36oeh06bggpgohck.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDEhfy2DuOIKKxS9ahJJgwIplZUG4rU66Q"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "315093075278-qnlc4k32v194svrb36oeh06bggpgohck.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:315093075278:android:0cc82c2e8760a187ac0a1f",
-        "android_client_info": {
-          "package_name": "com.kordgramllc.brokerstreet"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "315093075278-qnlc4k32v194svrb36oeh06bggpgohck.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDEhfy2DuOIKKxS9ahJJgwIplZUG4rU66Q"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "315093075278-qnlc4k32v194svrb36oeh06bggpgohck.apps.googleusercontent.com",
+              "client_id": "1002835933232-eha70gnp9qlvjpcndqrr5s3kq73rufkm.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
