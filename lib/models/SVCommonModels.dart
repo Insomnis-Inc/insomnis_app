@@ -16,16 +16,16 @@ List<SVDrawerModel> getDrawerOptions() {
       image: 'images/socialv/icons/ic_3User.png', title: 'Events'));
   list.add(SVDrawerModel(
       image: 'images/socialv/icons/ic_Image.png', title: 'Groups'));
-  // list.add(SVDrawerModel(
-  //     image: 'images/socialv/icons/ic_Image.png', title: 'Pizza corner'));
-  // list.add(SVDrawerModel(
-  //     image: 'images/socialv/icons/ic_Image.png', title: 'Ice cream'));
-  // list.add(
-  //     SVDrawerModel(image: 'images/socialv/icons/ic_Image.png', title: 'BBQ'));
-  // list.add(SVDrawerModel(
-  //     image: 'images/socialv/icons/ic_Image.png', title: 'Wines & Spirits'));
-  // list.add(SVDrawerModel(
-  //     image: 'images/socialv/icons/ic_Image.png', title: 'Lost & Found'));
+  list.add(SVDrawerModel(
+      image: 'images/socialv/icons/ic_Image.png', title: 'Pizza corner'));
+  list.add(SVDrawerModel(
+      image: 'images/socialv/icons/ic_Image.png', title: 'Ice cream'));
+  list.add(
+      SVDrawerModel(image: 'images/socialv/icons/ic_Image.png', title: 'BBQ'));
+  list.add(SVDrawerModel(
+      image: 'images/socialv/icons/ic_Image.png', title: 'Wines & Spirits'));
+  list.add(SVDrawerModel(
+      image: 'images/socialv/icons/ic_Image.png', title: 'Lost & Found'));
 
   list.add(SVDrawerModel(
       image: 'images/socialv/icons/ic_Image.png', title: 'Bookmarks'));
