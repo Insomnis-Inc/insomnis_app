@@ -1,3 +1,4 @@
+import 'package:brokerstreet/screens/SVDashboardScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -9,8 +10,8 @@ Color primaryColor2 = SHIMMER_BLUE_DARK;
 
 class EASelectHashtagScreen extends StatefulWidget {
   final String? name;
-
-  EASelectHashtagScreen({this.name = 'Kampala'});
+  final bool backButton;
+  EASelectHashtagScreen({this.name = 'Kampala', this.backButton = false});
 
   @override
   _EASelectHashtagScreenState createState() => _EASelectHashtagScreenState();
@@ -20,8 +21,9 @@ class _EASelectHashtagScreenState extends State<EASelectHashtagScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          getAppBar("Select Interests", backWidget: BackButton(color: white)),
+      appBar: getAppBar("Select Interests",
+          backWidget:
+              widget.backButton ? BackButton(color: white) : Offstage()),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -101,6 +103,7 @@ class _EASelectHashtagScreenState extends State<EASelectHashtagScreen> {
                   style: boldTextStyle(color: white, size: 18)),
             ).onTap(() {
               // DTSignInScreen(name: widget.name).launch(context);
+              navigatePage(context, className: SVDashboardScreen());
             }),
           ),
         ],

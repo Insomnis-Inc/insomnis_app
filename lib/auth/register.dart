@@ -210,8 +210,10 @@ class _RegisterState extends State<Register> {
     setState(() {
       _isLoading2 = true;
     });
+    User? user1 = FirebaseAuth.instance.currentUser;
+    await user1!.reload();
     User? user = FirebaseAuth.instance.currentUser;
-    await user!.reload().then((value) async => await user.reload());
+    await user!.reload();
 
     if (user.emailVerified) {
       showSuccessToast("Email Verified", context);

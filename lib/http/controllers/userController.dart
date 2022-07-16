@@ -72,22 +72,21 @@ Future<bool> userSignUp({
 
 /* == LOGIN == */
 Future<bool> userLogIn(String email) async {
-  // FormData formData = FormData.fromMap({'email': email});
+  FormData formData = FormData.fromMap({'email': email});
 
-  // var response = await dio.post('$API_URL/login', data: formData);
+  var response = await dio.post('$API_URL/login', data: formData);
 
-  var postUri = Uri.parse("$API_URL/login");
-  var request = http.MultipartRequest("POST", postUri);
-  request.fields['email'] = email;
+  // var postUri = Uri.parse("$API_URL/login");
+  // var request = http.MultipartRequest("POST", postUri);
+  // request.fields['email'] = email;
   // request.files.add(new http.MultipartFile.fromBytes('file', await File.fromUri("<path/to/file>").readAsBytes(), contentType: new MediaType('image', 'jpeg')))
 
-  var response = await request.send();
+  // var response = await request.send();
   // .then((response) async {
   if (response.statusCode == 200) {
     print("Uploaded! ${response.statusCode}");
-    var jsonData = json
-        .decode((await response.stream.bytesToString()).replaceAll("|", ''));
-    print('LOGIN ${jsonData}');
+    var jsonData = json.decode(response.toString());
+    print('LOGIN ${jsonData['data']['id']}');
     await saveId(jsonData['data']['id']);
 
     return true;
