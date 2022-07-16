@@ -2,8 +2,10 @@
 
 import 'dart:io';
 
+import 'package:brokerstreet/auth/chooseInterest.dart';
 import 'package:brokerstreet/auth/intro.dart';
 import 'package:brokerstreet/screens/EventsScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -32,6 +34,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
   await initialize();
+  await Firebase.initializeApp();
   await Hive.initFlutter();
   await Hive.openBox(UserRegBox);
   await Hive.openBox(TokenBox);
@@ -56,16 +59,16 @@ class MyApp extends StatelessWidget {
     ]);
     return Observer(
       builder: (_) => MaterialApp(
-          scrollBehavior: SBehavior(),
-          navigatorKey: navigatorKey,
-          title: 'Insomnis',
-          debugShowCheckedModeBanner: true,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-          home: IntroPage()
-          // home: status ? SVDashboardScreen() : SVSplashScreen(),
-          ),
+        scrollBehavior: SBehavior(),
+        navigatorKey: navigatorKey,
+        title: 'Insomnis',
+        debugShowCheckedModeBanner: true,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+        // home: EASelectHashtagScreen()
+        home: status ? SVDashboardScreen() : IntroPage(),
+      ),
     );
   }
 }

@@ -1,13 +1,16 @@
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:brokerstreet/http/controllers/userController.dart';
 import 'package:brokerstreet/screens/SVDashboardScreen.dart';
 import 'package:country_code_picker/country_code.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:brokerstreet/toast.dart';
 
 import '../custom_colors.dart';
+import '../screens/EASelectHashtagScreen.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key, this.verify = false}) : super(key: key);
@@ -23,7 +26,8 @@ class _RegisterState extends State<Register> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _confirmPswdController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
+
+  // TextEditingController _phoneController = TextEditingController();
 
   int _verifyPage = 2;
 
@@ -33,6 +37,16 @@ class _RegisterState extends State<Register> {
   bool verifyLoading = false;
   String _countryDialCode = "+256";
   // RegisterModel register = RegisterModel();
+
+  String type = 'User';
+
+  final List<String> items = [
+    'Bar',
+    'User',
+    'Restaurant',
+    'Hotel',
+    'Apartment'
+  ];
 
   @override
   void initState() {
@@ -80,10 +94,14 @@ class _RegisterState extends State<Register> {
     _pageAnimate(1);
   }
 
-  _validateNameAndPhone() {
+  _registerUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String _pswd = _pswdController.text.trim();
+    String _eml = _emailController.text.trim();
     String _name = _nameController.text.trim();
-    String _phoneText = _phoneController.text.trim();
-    String _phoneNumber = _countryDialCode + _phoneText;
+    FocusScope.of(context).unfocus();
 
     if (_name.length < 2) {
       showErrorToast("Name is too short", context);
@@ -92,23 +110,6 @@ class _RegisterState extends State<Register> {
       });
       return;
     }
-
-    if (_phoneText.length < 2) {
-      showErrorToast("Please enter a phone number", context);
-      setState(() {
-        _isLoading = false;
-      });
-      return;
-    }
-  }
-
-  _registerUser() async {
-    setState(() {
-      _isLoading = true;
-    });
-    String _pswd = _pswdController.text.trim();
-    String _eml = _emailController.text.trim();
-    FocusScope.of(context).unfocus();
 
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -143,11 +144,12 @@ class _RegisterState extends State<Register> {
         // print('User is currently signed out!');
         // return;
       } else {
-        // print('User is signed in!');
+        print('User is signed in!');
         //box.put('name', _username);  follow up
         // box.put('email', user.email);
         if (!user.emailVerified) {
           await user.sendEmailVerification();
+          print('email sent');
           // box.put("verifyPage", true);
           // Provider.of<SplashProvider>(context, listen: false).setVerify();
 
@@ -171,8 +173,14 @@ class _RegisterState extends State<Register> {
     setState(() {
       verifyLoading = true;
     });
-    String _phoneText = _phoneController.text.trim();
-    String _phoneNumber = _countryDialCode + _phoneText;
+
+    await userSignUp(
+            email: _emailController.text,
+            username: _nameController.text,
+            type: type)
+        .then((value) => route(value, "Check your connection & try again"));
+    // String _phoneText = _phoneController.text.trim();
+    // String _phoneNumber = _countryDialCode + _phoneText;
 
     // register.fName = _nameController.text.trim();
     // register.lName = "_";
@@ -182,7 +190,7 @@ class _RegisterState extends State<Register> {
 
   route(bool isRoute, String errorMessage) async {
     if (isRoute) {
-      navigatePage(context, className: SVDashboardScreen());
+      navigatePage(context, className: EASelectHashtagScreen());
     } else {
       showErrorToast(errorMessage, context);
       setState(() {
@@ -203,8 +211,7 @@ class _RegisterState extends State<Register> {
       _isLoading2 = true;
     });
     User? user = FirebaseAuth.instance.currentUser;
-    user!.reload();
-    user.reload();
+    await user!.reload().then((value) async => await user.reload());
 
     if (user.emailVerified) {
       showSuccessToast("Email Verified", context);
@@ -427,6 +434,53 @@ class _RegisterState extends State<Register> {
                           enabledBorder: outlineInputBorder,
                           errorBorder: outlineInputBorder,
                           disabledBorder: outlineInputBorder,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: v16 * 1.5),
+                      padding: EdgeInsets.only(
+                          left: v16 / 2,
+                          right: v16 / 2,
+                          bottom: v16 / 2,
+                          top: v16 / 2),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: SHIMMER_DARK),
+                          color: Colors.grey[300]),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          dropdownDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: SHIMMER_DARK),
+                          ),
+                          hint: Text(
+                            'Select Account type',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Theme.of(context).hintColor,
+                            ),
+                          ),
+                          items: items
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ))
+                              .toList(),
+                          value: type,
+                          onChanged: (value) {
+                            setState(() {
+                              type = value as String;
+                            });
+                          },
+                          // buttonHeight: 40,
+                          // buttonWidth: 140,
+                          itemHeight: 40,
                         ),
                       ),
                     ),

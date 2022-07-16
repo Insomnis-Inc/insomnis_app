@@ -4,6 +4,7 @@ import 'package:brokerstreet/custom_colors.dart';
 import 'package:brokerstreet/screens/SVDashboardScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../screens/EASelectHashtagScreen.dart';
 import '../toast.dart';
 import 'forgot_password.dart';
 import 'google_signin.dart';
@@ -120,7 +121,7 @@ class _LoginState extends State<Login> {
     if (isRoute) {
       // await Provider.of<ProfileProvider>(context, listen: false)
       //     .getUserInfo(context);
-      navigatePage(context, className: SVDashboardScreen());
+      navigatePage(context, className: EASelectHashtagScreen());
     } else {
       // showErrorToast(errorMessage, context);
       setState(() {
