@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:brokerstreet/http/models/NotificationApi.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -15,9 +16,19 @@ class NotificationComponent extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.network(element.notifier!.avatar,
-                height: 40, width: 40, fit: BoxFit.cover)
-            .cornerRadiusWithClipRRect(8),
+        CachedNetworkImage(
+          imageUrl: element.notifier!.avatar,
+          height: 40,
+          width: 40,
+          fit: BoxFit.cover,
+          placeholder: (context, url) => Image.asset(
+            "assets/images/avatar.png",
+            height: 56,
+            width: 56,
+            fit: BoxFit.cover,
+          ),
+          errorWidget: (context, url, error) => Icon(Icons.error),
+        ).cornerRadiusWithClipRRect(8),
         8.width,
         Column(
           children: [

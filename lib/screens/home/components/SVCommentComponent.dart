@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:brokerstreet/http/controllers/commentsController.dart';
 import 'package:brokerstreet/http/models/Comment.dart';
@@ -34,9 +35,19 @@ class _SVCommentComponentState extends State<SVCommentComponent> {
           children: [
             Row(
               children: [
-                Image.network(widget.comment.creator.avatar.validate(),
-                        height: 48, width: 48, fit: BoxFit.cover)
-                    .cornerRadiusWithClipRRect(8),
+                CachedNetworkImage(
+                  imageUrl: widget.comment.creator.avatar.validate(),
+                  height: 48,
+                  width: 48,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Image.asset(
+                    "assets/images/avatar.png",
+                    height: 56,
+                    width: 56,
+                    fit: BoxFit.cover,
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ).cornerRadiusWithClipRRect(8),
                 16.width,
                 Text(widget.comment.creator.displayname.validate(),
                     style: boldTextStyle(size: 14)),

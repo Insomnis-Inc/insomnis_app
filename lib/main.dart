@@ -1,28 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:io';
-
-import 'package:brokerstreet/auth/chooseInterest.dart';
 import 'package:brokerstreet/auth/intro.dart';
-import 'package:brokerstreet/screens/EventsScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:brokerstreet/screens/auth/screens/SVSignInScreen.dart';
-import 'package:brokerstreet/webview.dart';
-// import 'package:nb_utils/nb_utils.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:brokerstreet/screens/SVSplashScreen.dart';
 import 'package:brokerstreet/store/AppStore.dart';
 import 'package:brokerstreet/utils/AppTheme.dart';
-
-import 'custom_colors.dart';
-import 'screens/EASelectHashtagScreen.dart';
 import 'screens/SVDashboardScreen.dart';
-import 'screens/auth/components/SVSignUpComponent.dart';
-import 'screens/fragments/SVHomeFragment.dart';
 
 AppStore appStore = AppStore();
 // for registration details

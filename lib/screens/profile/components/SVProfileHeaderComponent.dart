@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:brokerstreet/http/models/UserApi.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -15,11 +16,18 @@ class SVProfileHeaderComponent extends StatelessWidget {
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
-              Image.network(
-                user.cover,
+              CachedNetworkImage(
+                imageUrl: user.cover,
                 width: context.width(),
                 height: 130,
                 fit: BoxFit.cover,
+                placeholder: (context, url) => Image.asset(
+                  "assets/images/avatar.png",
+                  height: 56,
+                  width: 56,
+                  fit: BoxFit.cover,
+                ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ).cornerRadiusWithClipRRectOnly(
                   topLeft: SVAppCommonRadius.toInt(),
                   topRight: SVAppCommonRadius.toInt()),
@@ -29,9 +37,19 @@ class SVProfileHeaderComponent extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.white, width: 2),
                       borderRadius: radius(18)),
-                  child: Image.network(user.avatar,
-                          height: 88, width: 88, fit: BoxFit.cover)
-                      .cornerRadiusWithClipRRect(SVAppCommonRadius),
+                  child: CachedNetworkImage(
+                    imageUrl: user.avatar,
+                    height: 88,
+                    width: 88,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Image.asset(
+                      "assets/images/avatar.png",
+                      height: 56,
+                      width: 56,
+                      fit: BoxFit.cover,
+                    ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ).cornerRadiusWithClipRRect(SVAppCommonRadius),
                 ),
               ),
             ],

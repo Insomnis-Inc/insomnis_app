@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:brokerstreet/http/models/UserApi.dart';
 // import 'package:nb_utils/nb_utils.dart';
@@ -17,9 +18,19 @@ class SVFollowResult extends StatelessWidget {
       children: [
         Row(
           children: [
-            Image.network(element.avatar,
-                    height: 56, width: 56, fit: BoxFit.cover)
-                .cornerRadiusWithClipRRect(8),
+            CachedNetworkImage(
+              imageUrl: element.avatar,
+              height: 56,
+              width: 56,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Image.asset(
+                "assets/images/avatar.png",
+                height: 56,
+                width: 56,
+                fit: BoxFit.cover,
+              ),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ).cornerRadiusWithClipRRect(8),
             20.width,
             Column(
               children: [

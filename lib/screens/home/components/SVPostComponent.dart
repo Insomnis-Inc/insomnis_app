@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:brokerstreet/http/controllers/postController.dart';
 import 'package:brokerstreet/http/models/Post.dart';
@@ -19,11 +20,13 @@ class SVPostComponent extends StatefulWidget {
   State<SVPostComponent> createState() => _SVPostComponentState();
 }
 
-class _SVPostComponentState extends State<SVPostComponent> {
+class _SVPostComponentState extends State<SVPostComponent>
+    with AutomaticKeepAliveClientMixin {
   // List<SVPostModel> postList = getPosts();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ListView.builder(
       itemCount: widget.posts.length,
       padding: EdgeInsets.only(bottom: 48),
@@ -43,11 +46,18 @@ class _SVPostComponentState extends State<SVPostComponent> {
                 children: [
                   Row(
                     children: [
-                      Image.network(
-                        widget.posts[index]!.creator.avatar,
+                      CachedNetworkImage(
+                        imageUrl: widget.posts[index]!.creator.avatar,
                         height: 56,
                         width: 56,
                         fit: BoxFit.cover,
+                        placeholder: (context, url) => Image.asset(
+                          "assets/images/avatar.png",
+                          height: 56,
+                          width: 56,
+                          fit: BoxFit.cover,
+                        ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ).cornerRadiusWithClipRRect(SVAppCommonRadius).onTap(() {
                         if (!mine) {
                           SVProfileFragment(widget.posts[index]!.creator.id)
@@ -254,4 +264,7 @@ class _SVPostComponentState extends State<SVPostComponent> {
       physics: NeverScrollableScrollPhysics(),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

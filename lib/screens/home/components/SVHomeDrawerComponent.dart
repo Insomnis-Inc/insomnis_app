@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:brokerstreet/auth/intro.dart';
+import 'package:brokerstreet/screens/fragments/ExtraPosts.dart';
 import 'package:flutter/material.dart';
 import 'package:brokerstreet/custom_colors.dart';
 import 'package:brokerstreet/main.dart';
@@ -14,6 +16,7 @@ import 'package:brokerstreet/screens/profile/screens/SVGroupProfileScreen.dart';
 import 'package:brokerstreet/utils/SVColors.dart';
 import 'package:brokerstreet/utils/SVCommon.dart';
 
+import '../../../http/models/Extra.dart';
 import '../../auth/screens/SVSignInScreen.dart';
 
 class SVHomeDrawerComponent extends StatefulWidget {
@@ -22,7 +25,7 @@ class SVHomeDrawerComponent extends StatefulWidget {
 }
 
 class _SVHomeDrawerComponentState extends State<SVHomeDrawerComponent> {
-  List<SVDrawerModel> options = getDrawerOptions();
+  List<Extra> options = getDrawerOptions();
 
   int selectedIndex = -1;
   late String id;
@@ -43,7 +46,7 @@ class _SVHomeDrawerComponentState extends State<SVHomeDrawerComponent> {
       children: [
         8.height,
         Image.asset('images/socialv/backgroundImage.png',
-            height: 120, width: context.width()),
+            height: 136, width: context.width()),
         // Row(
         //   crossAxisAlignment: CrossAxisAlignment.start,
         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,7 +82,7 @@ class _SVHomeDrawerComponentState extends State<SVHomeDrawerComponent> {
         //     ),
         //   ],
         // ).paddingOnly(left: 16, right: 8, bottom: 20, top: 20),
-        20.height,
+        // 0.height,
         Column(
           mainAxisSize: MainAxisSize.min,
           children: options.map((e) {
@@ -89,7 +92,7 @@ class _SVHomeDrawerComponentState extends State<SVHomeDrawerComponent> {
                   color: selectedIndex == index
                       ? SVAppColorPrimary.withAlpha(30)
                       : context.cardColor),
-              title: e.title.validate(),
+              title: e.name.validate(),
               titleTextStyle: boldTextStyle(size: 14),
               leading: Image.asset(e.image.validate(),
                   height: 22,
@@ -101,11 +104,8 @@ class _SVHomeDrawerComponentState extends State<SVHomeDrawerComponent> {
                 setState(() {});
                 if (selectedIndex == options.length - 1) {
                   finish(context);
-                  finish(context);
-                } else if (selectedIndex == 2) {
-                  // finish(context);
                   logOutCustom(context);
-                  navigatePage(context, className: new SVSignInScreen());
+                  navigatePage(context, className: IntroPage());
                 } else if (selectedIndex == 0) {
                   finish(context);
                   const EventsPage().launch(context);
@@ -113,18 +113,22 @@ class _SVHomeDrawerComponentState extends State<SVHomeDrawerComponent> {
                   finish(context);
                   SVGroupProfileScreen().launch(context);
                   // MenuIndex(id).launch(context);
+                } else if (selectedIndex > 1) {
+                  finish(context);
+                  ExtraPosts(title: e.name!, extraId: e.id ?? 'non')
+                      .launch(context);
                 }
               },
             );
           }).toList(),
-        ).expand(),
+        ),
         // const Divider(indent: 16, endIndent: 16),
         // SnapHelperWidget<PackageInfo>(
         //   future: PackageInfo.fromPlatform(),
         //   onSuccess: (data) =>
         //       Text(data.version, style: boldTextStyle(color: svGetBodyColor())),
         // ),
-        20.height,
+        16.height,
       ],
     );
   }
