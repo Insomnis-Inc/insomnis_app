@@ -49,6 +49,13 @@ android {
         versionName flutterVersionName
     }
 
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "Instantiatable"
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
     signingConfigs {
         release {
            keyAlias keystoreProperties['keyAlias']
@@ -59,8 +66,8 @@ android {
     }
     buildTypes {
         release {
-           signingConfig signingConfigs.debug
-        //    signingConfig signingConfigs.release
+        //    signingConfig signingConfigs.debug
+           signingConfig signingConfigs.release
         }
     }
 
@@ -75,3 +82,5 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.0.1')
     implementation 'com.google.firebase:firebase-analytics'
 }
+
+
