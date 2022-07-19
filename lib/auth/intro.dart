@@ -21,39 +21,42 @@ class _IntroPageState extends State<IntroPage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     double v16 = width / 20;
-    return Scaffold(
-      body: Container(
-        width: width,
-        height: height,
-        child: PageView(
-          controller: _pageController,
-          children: [
-            introSlide(
-                height: height,
-                pageIndex: 0,
-                text: "A little joy & party doesn't hurt",
-                imageNumber: 2,
-                width: width,
-                v16: v16,
-                textAlign: TextAlign.end),
-            introSlide(
-                height: height,
-                text: "To beer, or not to beer, that is a silly question.",
-                pageIndex: 1,
-                imageNumber: 3,
-                width: width,
-                v16: v16,
-                textAlign: TextAlign.center),
-            introSlide(
-                height: height,
-                text: "Join the Community",
-                imageNumber: 1,
-                width: width,
-                pageIndex: 2,
-                v16: v16,
-                isLast: true,
-                textAlign: TextAlign.start),
-          ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Container(
+          width: width,
+          height: height,
+          child: PageView(
+            controller: _pageController,
+            children: [
+              introSlide(
+                  height: height,
+                  pageIndex: 0,
+                  text: "A little joy & party doesn't hurt",
+                  imageNumber: 2,
+                  width: width,
+                  v16: v16,
+                  textAlign: TextAlign.end),
+              introSlide(
+                  height: height,
+                  text: "To beer, or not to beer, that is a silly question.",
+                  pageIndex: 1,
+                  imageNumber: 3,
+                  width: width,
+                  v16: v16,
+                  textAlign: TextAlign.center),
+              introSlide(
+                  height: height,
+                  text: "Join the Community",
+                  imageNumber: 1,
+                  width: width,
+                  pageIndex: 2,
+                  v16: v16,
+                  isLast: true,
+                  textAlign: TextAlign.start),
+            ],
+          ),
         ),
       ),
     );

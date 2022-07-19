@@ -60,6 +60,8 @@ class _LoginState extends State<Login> {
     await userLogIn(user!.email!)
         .then((value) => route(value, "Check your connection & try again"));
     if (_loginError) {
+      showToast("Please create Account", context);
+      return;
       // if (result.contains('404')) {
       // new user
       // register.fName = user.displayName;
