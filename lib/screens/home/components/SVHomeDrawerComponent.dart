@@ -115,7 +115,11 @@ class _SVHomeDrawerComponentState extends State<SVHomeDrawerComponent> {
                   // MenuIndex(id).launch(context);
                 } else if (selectedIndex > 1) {
                   finish(context);
-                  ExtraPosts(title: e.name!, extraId: e.id ?? 'non')
+                  ExtraPosts(
+                          title: e.name!,
+                          image: e.image!,
+                          canAdd: e.canAdd,
+                          extraId: e.id ?? 'non')
                       .launch(context);
                 }
               },

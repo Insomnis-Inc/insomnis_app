@@ -93,7 +93,8 @@ Future<List<Post?>> events() async {
 }
 
 List<String> getEvents() {
-  return ['Clubs', 'Concerts', 'Sports', 'Trips', 'Apartments & Hotels'];
+  return ['Clubs', 'Concerts', 'Sports', 'Trips'];
+  //  'Apartments & Hotels'
 }
 
 Future<List<Post?>> eventsType(String eventType) async {

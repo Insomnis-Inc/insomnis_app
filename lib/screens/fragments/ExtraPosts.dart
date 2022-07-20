@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_final_fields, sized_box_for_whitespace
 
 import 'package:brokerstreet/http/controllers/extraController.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:brokerstreet/custom_colors.dart';
 import 'package:brokerstreet/http/models/Post.dart';
@@ -12,13 +13,21 @@ import 'package:brokerstreet/screens/fragments/SVProfileFragment.dart';
 import 'package:brokerstreet/screens/search/components/SVSearchCardComponent.dart';
 import 'package:brokerstreet/utils/SVCommon.dart';
 
+import '../../http/models/Extra.dart';
 import '../home/components/SVPostComponent.dart';
+import 'SVAddPostFragment.dart';
 
 class ExtraPosts extends StatefulWidget {
   final String title;
   final String extraId;
+  final bool canAdd;
+  final String image;
 
-  ExtraPosts({required this.title, required this.extraId});
+  ExtraPosts(
+      {required this.title,
+      this.canAdd = false,
+      required this.image,
+      required this.extraId});
   @override
   State<ExtraPosts> createState() => _ExtraPostsState();
 }
@@ -270,6 +279,19 @@ class _ExtraPostsState extends State<ExtraPosts> {
           ),
         ),
       ),
+      floatingActionButton: widget.canAdd
+          ? FloatingActionButton(
+              backgroundColor: APP_ACCENT,
+              onPressed: () => navigatePage(context,
+                  className: SVAddPostFragment(
+                      isExtra: true,
+                      extra: Extra(
+                          id: widget.extraId,
+                          name: widget.title,
+                          image: widget.image,
+                          canAdd: widget.canAdd))),
+              child: Icon(EvaIcons.edit2Outline, color: svGetScaffoldColor()))
+          : Offstage(),
     );
   }
 }

@@ -15,7 +15,7 @@ List<Extra> getDrawerOptions() {
   // list.add(Extra(
   //     image: 'images/socialv/icons/ic_2User.png', name: 'Friends'));
   list.add(Extra(image: 'assets/images/extras/party.png', name: 'Events'));
-  list.add(Extra(image: 'images/socialv/icons/ic_3User.png', name: 'Groups'));
+  list.add(Extra(image: 'assets/images/people.png', name: 'Groups'));
   list.add(Extra(
       image: 'assets/images/extras/pizza.png',
       id: '954eb3a8-93cb-4269-9c2b-2a6888b28e72',
@@ -33,12 +33,16 @@ List<Extra> getDrawerOptions() {
       id: "db9fc096-e85f-4bef-81f0-c06cbd3092a9",
       name: 'Wines & Spirits'));
   list.add(Extra(
+      image: 'assets/images/apartment.png',
+      // id: '81a9e5c1-1a8c-45c8-9b97-c141e17b8397',
+      name: 'Apartments & Hotels'));
+  list.add(Extra(
       image: 'assets/images/extras/found.png',
       id: '81a9e5c1-1a8c-45c8-9b97-c141e17b8397',
+      canAdd: true,
       name: 'Lost & Found'));
 
-  list.add(
-      Extra(image: 'assets/images/extras/bookmark.png', name: 'Bookmarks'));
+  list.add(Extra(image: 'assets/images/ribbon.png', name: 'Bookmarks'));
   // list.add(Extra(image: 'images/socialv/icons/ic_Document.png', name: 'Forums'));
   // list.add(Extra(
   //     image: 'images/socialv/icons/ic_Send.png', name: 'Lost & Found'));

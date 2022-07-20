@@ -18,9 +18,14 @@ import 'package:brokerstreet/utils/SVColors.dart';
 import 'package:brokerstreet/utils/SVCommon.dart';
 
 import '../../http/controllers/eventController.dart';
+import '../../http/models/Extra.dart';
 
 class SVAddPostFragment extends StatefulWidget {
-  const SVAddPostFragment({Key? key, this.isEvent = false}) : super(key: key);
+  final bool isExtra;
+  final Extra? extra;
+  const SVAddPostFragment(
+      {Key? key, this.isEvent = false, this.extra, this.isExtra = false})
+      : super(key: key);
   final bool isEvent;
 
   @override

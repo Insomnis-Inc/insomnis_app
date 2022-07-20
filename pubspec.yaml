@@ -92,16 +92,7 @@ flutter:
     - images/
     - assets/images/
     - assets/images/extras/
-    - assets/images/google.png
-    - assets/images/apple.png
-    - assets/images/logo.png
-    - assets/images/splash.png
-    - assets/images/splash_logo.png
-    - assets/images/down.png
-    - assets/images/click.png
-    - assets/images/intro/intro1.jpg
-    - assets/images/intro/intro2.jpg
-    - assets/images/intro/intro3.jpg
+    - assets/images/intro/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
