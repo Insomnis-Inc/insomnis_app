@@ -30,7 +30,8 @@ class SVHomeFragment extends StatefulWidget {
   State<SVHomeFragment> createState() => _SVHomeFragmentState();
 }
 
-class _SVHomeFragmentState extends State<SVHomeFragment> {
+class _SVHomeFragmentState extends State<SVHomeFragment>
+    with AutomaticKeepAliveClientMixin {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   Future<List<UserApi?>>? _users;
   // Future<List<Post?>>? _posts;
@@ -105,6 +106,7 @@ class _SVHomeFragmentState extends State<SVHomeFragment> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     double v16 = width / 20;
@@ -326,6 +328,9 @@ class _SVHomeFragmentState extends State<SVHomeFragment> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class PostFuture extends StatefulWidget {
@@ -336,7 +341,8 @@ class PostFuture extends StatefulWidget {
   State<PostFuture> createState() => _PostFutureState();
 }
 
-class _PostFutureState extends State<PostFuture> {
+class _PostFutureState extends State<PostFuture>
+    with AutomaticKeepAliveClientMixin {
   late Future<List<Post?>> _posts;
   late Future<List<Post?>> _barPosts;
   late Future<List<Post?>> _resPosts;
@@ -381,6 +387,7 @@ class _PostFutureState extends State<PostFuture> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var v16 = width / 20;
@@ -419,7 +426,11 @@ class _PostFutureState extends State<PostFuture> {
                   style: TextStyle(fontSize: 16, color: APP_ACCENT),
                 ).paddingOnly(bottom: 8),
                 InkWell(
-                    onTap: () => _onRefresh(),
+                    onTap: () => widget.type == 1
+                        ? _onRefresh()
+                        : widget.type == 2
+                            ? _onRefresh2()
+                            : _onRefresh3(),
                     child: Container(
                       height: 64,
                       margin: EdgeInsets.symmetric(horizontal: v16 * 4),
@@ -441,4 +452,7 @@ class _PostFutureState extends State<PostFuture> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

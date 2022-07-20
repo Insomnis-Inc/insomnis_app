@@ -11,6 +11,7 @@ class Post {
   final UserApi creator;
   bool liked;
   final String createdAt;
+  bool saved;
 
   Post(
       {required this.id,
@@ -20,6 +21,7 @@ class Post {
       required this.comments,
       required this.liked,
       required this.createdAt,
+      required this.saved,
       required this.likes,
       required this.creator});
 
@@ -32,6 +34,7 @@ class Post {
         attached: media_url + (json['attached'] ?? ''),
         comments: json['comments'],
         liked: json['liked'].toString() == '1' ? true : false,
+        saved: json['saved'].toString() == '1' ? true : false,
         likes: json['likes'],
         creator: UserApi.fromJson(json['creator'][0]));
   }

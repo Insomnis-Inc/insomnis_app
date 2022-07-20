@@ -11,7 +11,34 @@ Dio dio = Dio();
 
 /// ==========================================================
 /// ==========================================================
-/// Get Extras
+/// Search Saved Posts
+/// ==========================================================
+/// ==========================================================
+
+Future<List<Post?>> searchSavedPosts({required String term}) async {
+  var response = await http
+      .get(Uri.parse('$API_URL/search/$term/saved/' + await retrieveId()));
+  print("Search Saveds: ${response.statusCode}");
+
+  var jsonD = jsonDecode(response.body);
+  print(jsonD.toString());
+
+  List<Post?> results = [];
+  try {
+    for (var item in jsonD['posts']) {
+      results.add(Post.fromJson(
+        item,
+      ));
+    }
+  } catch (e) {
+    print("Parse Error: $e");
+  }
+  return results;
+}
+
+/// ==========================================================
+/// ==========================================================
+/// Get Saved Posts
 /// ==========================================================
 /// ==========================================================
 Future<List<Post?>> getSavedPosts() async {

@@ -18,6 +18,7 @@ import 'package:brokerstreet/utils/SVCommon.dart';
 
 import '../../../http/models/Extra.dart';
 import '../../auth/screens/SVSignInScreen.dart';
+import '../../fragments/SavedPosts.dart';
 
 class SVHomeDrawerComponent extends StatefulWidget {
   @override
@@ -106,6 +107,9 @@ class _SVHomeDrawerComponentState extends State<SVHomeDrawerComponent> {
                   finish(context);
                   logOutCustom(context);
                   navigatePage(context, className: IntroPage());
+                } else if (selectedIndex == options.length - 2) {
+                  finish(context);
+                  navigatePage(context, className: SavedPosts());
                 } else if (selectedIndex == 0) {
                   finish(context);
                   const EventsPage().launch(context);

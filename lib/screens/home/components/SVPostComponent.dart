@@ -12,6 +12,8 @@ import 'package:brokerstreet/screens/home/screens/SVCommentScreen.dart';
 import 'package:brokerstreet/utils/SVCommon.dart';
 import 'package:brokerstreet/utils/SVConstants.dart';
 
+import '../../../http/controllers/SavedPostController.dart';
+
 class SVPostComponent extends StatefulWidget {
   final List<Post?> posts;
   final String myId;
@@ -93,9 +95,25 @@ class _SVPostComponentState extends State<SVPostComponent>
                       Text(widget.posts[index]!.createdAt,
                           style: secondaryTextStyle(
                               color: svGetBodyColor(), size: 12)),
-                      if (mine)
-                        IconButton(
-                            onPressed: () {}, icon: Icon(Icons.more_horiz)),
+                      IconButton(
+                          onPressed: () {
+                            if (widget.posts[index]!.saved) {
+                              setState(() {
+                                widget.posts[index]!.saved =
+                                    !widget.posts[index]!.saved;
+                              });
+                              unsavePost(widget.posts[index]!.id);
+                            } else {
+                              setState(() {
+                                widget.posts[index]!.saved =
+                                    !widget.posts[index]!.saved;
+                              });
+                              savePost(widget.posts[index]!.id);
+                            }
+                          },
+                          icon: Icon(widget.posts[index]!.saved
+                              ? Icons.bookmark
+                              : Icons.bookmark_border_outlined))
                     ],
                   ).paddingSymmetric(horizontal: 8),
                 ],
