@@ -17,6 +17,7 @@ AppStore appStore = AppStore();
 const UserRegBox = 'userReg';
 // box for everything else including country, currency, token
 const TokenBox = "token";
+const TutorialKey = 'isNewForTutorial';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
