@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:brokerstreet/toast.dart';
 
 import '../custom_colors.dart';
+import '../main.dart';
 import '../screens/EASelectHashtagScreen.dart';
 
 class Register extends StatefulWidget {
@@ -147,38 +148,38 @@ class _RegisterState extends State<Register> {
         print('User is signed in!');
         //box.put('name', _username);  follow up
         // box.put('email', user.email);
-        if (!user.emailVerified) {
-          await user.sendEmailVerification();
-          print('email sent');
-          // box.put("verifyPage", true);
-          // Provider.of<SplashProvider>(context, listen: false).setVerify();
+        await userSignUp(
+                email: _emailController.text,
+                username: _nameController.text,
+                type: type)
+            .then((value) => route(value, "Check your connection & try again"));
+        // if (!user.emailVerified) {
+        //   // await user.sendEmailVerification();
+        //   // print('email sent');
+        //   // box.put("verifyPage", true);
+        //   // Provider.of<SplashProvider>(context, listen: false).setVerify();
 
-          _pageController.animateToPage(
-            _verifyPage,
-            duration: Duration(milliseconds: 700),
-            curve: Curves.easeIn,
-          );
-        } else {
-          showToast("Please login instead", context);
-          setState(() {
-            _isLoading = false;
-          });
-          return;
-        }
+        //   _pageController.animateToPage(
+        //     _verifyPage,
+        //     duration: Duration(milliseconds: 700),
+        //     curve: Curves.easeIn,
+        //   );
+        // } else {
+        //   showToast("Please login instead", context);
+        //   setState(() {
+        //     _isLoading = false;
+        //   });
+        //   return;
+        // }
       }
     });
   }
 
   onVerifiedComplete(User user) async {
-    setState(() {
-      verifyLoading = true;
-    });
+    // setState(() {
+    //   verifyLoading = true;
+    // });
 
-    await userSignUp(
-            email: _emailController.text,
-            username: _nameController.text,
-            type: type)
-        .then((value) => route(value, "Check your connection & try again"));
     // String _phoneText = _phoneController.text.trim();
     // String _phoneNumber = _countryDialCode + _phoneText;
 
@@ -199,10 +200,10 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  resendLink() async {
+  sendLink() async {
     User? user = FirebaseAuth.instance.currentUser;
     await user!.sendEmailVerification();
-    showToast("Link sent again, check your email", context);
+    showToast("Link sent, check your email", context);
     return;
   }
 
@@ -220,7 +221,9 @@ class _RegisterState extends State<Register> {
       // Provider.of<SplashProvider>(context, listen: false)
       // .showVerify()
 
-      onVerifiedComplete(user);
+      // onVerifiedComplete(user);
+      saveVerified(true);
+      navigatePage(context, className: SVDashboardScreen());
       // Navigator.push(context,
       //     CupertinoPageRoute(builder: (context) => LocationSelectCountry()));
     } else {
@@ -569,30 +572,37 @@ class _RegisterState extends State<Register> {
                     Container(
                       margin: EdgeInsets.only(top: v16, bottom: v16),
                       child: Text(
-                        "Check your email for the verification link",
+                        "Click below to receive an email verification link",
                         style: normalTextStyle,
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => resendLink(),
+                      onTap: () => sendLink(),
                       child: Container(
                         margin: EdgeInsets.only(right: v16 * 1.8),
                         child: outlineButton(
                           v16: v16,
                           textColor: APP_ACCENT,
-                          title: "Resend link",
+                          title: "Send link",
                           border: Border.all(color: APP_ACCENT, width: 1.2),
                           // callback: null,
                         ),
                       ),
                     ),
+                    Container(
+                      margin: EdgeInsets.only(top: v16 * 2, bottom: v16),
+                      child: Text(
+                        "Click below after verification",
+                        style: normalTextStyle,
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () => checkVerified(),
                       child: Container(
-                        margin: EdgeInsets.only(top: v16 * 2, right: v16 * 3),
+                        margin: EdgeInsets.only(right: v16 * 3),
                         child: normalButton(
                           v16: v16,
-                          title: "Verified",
+                          title: _isLoading2 ? "loading..." : "I have Verified",
                           bgColor: _isLoading2 ? APP_GREY : APP_ACCENT,
                           // callback: null,
                         ),

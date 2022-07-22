@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:brokerstreet/auth/intro.dart';
+import 'package:brokerstreet/auth/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,13 +31,16 @@ void main() async {
   appStore.toggleDarkMode(value: await retrieveDarkMode());
 
   bool status = await retrieveSignedIn();
+  bool isVerified = await retrieveVerified();
 
-  runApp(MyApp(status));
+  runApp(MyApp(status: status, isVerified: isVerified));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp(this.status, {Key? key}) : super(key: key);
+  const MyApp({required this.status, required this.isVerified, Key? key})
+      : super(key: key);
   final bool status;
+  final bool isVerified;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -56,7 +60,9 @@ class MyApp extends StatelessWidget {
         darkTheme: AppTheme.darkTheme,
         themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
         // home: EASelectHashtagScreen()
-        home: status ? SVDashboardScreen() : IntroPage(),
+        home: status
+            ? (isVerified ? SVDashboardScreen() : Register(verify: true))
+            : IntroPage(),
       ),
     );
   }
@@ -117,6 +123,26 @@ saveSignedIn(bool signedIn) {
 Future<bool> retrieveSignedIn() async {
   var box = Hive.box(TokenBox);
   return box.get("signedIn") ?? false;
+}
+
+saveVerified(bool verified) {
+  var box = Hive.box(TokenBox);
+  box.put("isVerified", verified);
+}
+
+Future<bool> retrieveVerified() async {
+  var box = Hive.box(TokenBox);
+  return box.get("isVerified") ?? false;
+}
+
+saveEmail(String email) {
+  var box = Hive.box(TokenBox);
+  box.put("email", email);
+}
+
+Future<String> retrieveEmail() async {
+  var box = Hive.box(TokenBox);
+  return box.get("email") ?? '';
 }
 
 // Future<String> retrieveServerKey() async {

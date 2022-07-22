@@ -46,6 +46,7 @@ Future<bool> userSignUp({
     print(jsonData['data']['id']);
 
     await saveId(jsonData['data']['id']);
+    await saveEmail(email);
     return true;
   }
   // });

@@ -61,6 +61,9 @@ class _LoginState extends State<Login> {
         .then((value) => route(value, "Check your connection & try again"));
     if (_loginError) {
       showToast("Please create Account", context);
+      setState(() {
+        _loading2 = false;
+      });
       return;
       // if (result.contains('404')) {
       // new user
