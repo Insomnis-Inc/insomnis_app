@@ -29,10 +29,10 @@ class SVGroupProfileScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Avengers Group', style: boldTextStyle(size: 20)),
+                Text(' ', style: boldTextStyle(size: 20)),
                 4.width,
-                Image.asset('images/socialv/icons/ic_TickSquare.png',
-                    height: 14, width: 14, fit: BoxFit.cover),
+                // Image.asset('images/socialv/icons/ic_TickSquare.png',
+                //     height: 14, width: 14, fit: BoxFit.cover),
               ],
             ),
             8.height,
@@ -58,7 +58,7 @@ class SVGroupProfileScreen extends StatelessWidget {
                   color: context.iconColor,
                 ),
                 8.width,
-                Text('03 Years Ago',
+                Text('03 Years Ag',
                     style: secondaryTextStyle(color: svGetBodyColor())),
               ],
             ),

@@ -86,13 +86,13 @@ class _SVMessagesFragmentState extends State<SVMessagesFragment> {
           children: [
             Text('Chats', style: boldTextStyle()).paddingAll(16),
             Divider(height: 0, indent: 16, endIndent: 16),
-            Container(
-              padding: EdgeInsets.all(v16),
-              child: Text(
-                'No messages yet',
-                style: TextStyle(color: APP_ACCENT),
-              ),
-            ),
+            // Container(
+            //   padding: EdgeInsets.all(v16),
+            //   child: Text(
+            //     'No messages yet',
+            //     style: TextStyle(color: APP_ACCENT),
+            //   ),
+            // ),
             // FutureBuilder<List<NotificationApi?>>(
             //   future: _notifications,
             //   builder:
@@ -113,27 +113,19 @@ class _SVMessagesFragmentState extends State<SVMessagesFragment> {
             //     }
 
             //     if (snapshot.data == null || snapshot.data?.length == 0) {
-            //       return Container(
-            //         height: height * 0.8,
-            //         width: width,
-            //         child: RefreshIndicator(
-            //           triggerMode: RefreshIndicatorTriggerMode.anywhere,
-            //           color: APP_ACCENT,
-            //           onRefresh: () => _onRefresh(),
-            //           child: Center(
-            //               child: InkWell(
-            //                   onTap: () => _onRefresh(),
-            //                   child: Container(
-            //                     height: 64,
-            //                     margin:
-            //                         EdgeInsets.symmetric(horizontal: v16 * 4),
-            //                     child: normalButton(
-            //                         v16: v16,
-            //                         bgColor: APP_ACCENT,
-            //                         title: "refresh"),
-            //                   ))),
-            //         ),
-            //       );
+            Container(
+              height: height * 0.8,
+              width: width,
+              child: Center(
+                  child: InkWell(
+                      // onTap: () => _onRefresh(),
+                      child: Container(
+                height: 64,
+                margin: EdgeInsets.symmetric(horizontal: v16 * 4),
+                child: normalButton(
+                    v16: v16, bgColor: APP_ACCENT, title: "refresh"),
+              ))),
+            )
             //     }
 
             //     return Column(

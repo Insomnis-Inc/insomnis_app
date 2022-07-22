@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:io';
+import 'package:brokerstreet/auth/AuthScreen.dart';
 import 'package:brokerstreet/auth/intro.dart';
 import 'package:brokerstreet/auth/register.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -59,10 +60,10 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-        // home: EASelectHashtagScreen()
-        home: status
-            ? (isVerified ? SVDashboardScreen() : Register(verify: true))
-            : IntroPage(),
+        home: AuthScreen()
+        // home: status
+        //     ? (isVerified ? SVDashboardScreen() : Register(verify: true))
+        //     : IntroPage(),
       ),
     );
   }
