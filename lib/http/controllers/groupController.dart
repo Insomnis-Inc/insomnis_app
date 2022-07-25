@@ -16,7 +16,8 @@ import '../models/Group.dart';
 Dio dio = Dio();
 
 Future<List<GroupTile?>> allGroups() async {
-  var response = await http.get(Uri.parse('$API_URL/groups'));
+  var response =
+      await http.get(Uri.parse('$API_URL/groups/' + await retrieveId()));
   print("User: ${response.statusCode}");
 
   List<GroupTile?> results = [];
@@ -36,8 +37,8 @@ Future<List<GroupTile?>> allGroups() async {
 }
 
 Future<List<GroupTile?>> userGroups() async {
-  var response =
-      await http.get(Uri.parse('$API_URL/groups/' + await retrieveId()));
+  var response = await http
+      .get(Uri.parse('$API_URL/groups/' + await retrieveId() + '/member'));
   print("User: ${response.statusCode}");
 
   var jsonD = jsonDecode(response.body);

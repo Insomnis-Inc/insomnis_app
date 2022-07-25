@@ -129,7 +129,8 @@ class _GroupListState extends State<GroupList>
                         itemBuilder: (context, index) {
                           return GroupCardComponent(snapshot.data![index]!)
                               .onTap(() {
-                            SVGroupProfileScreen(snapshot.data![index]!.id)
+                            SVGroupProfileScreen(snapshot.data![index]!.id,
+                                    snapshot.data![index]!.isMember)
                                 .launch(context);
                           });
                         },
@@ -194,7 +195,8 @@ class _GroupListState extends State<GroupList>
                         itemBuilder: (context, index) {
                           return GroupCardComponent(snapshot.data![index]!)
                               .onTap(() {
-                            SVGroupProfileScreen(snapshot.data![index]!.id)
+                            SVGroupProfileScreen(snapshot.data![index]!.id,
+                                    snapshot.data![index]!.isMember)
                                 .launch(context);
                           });
                         },
@@ -211,7 +213,7 @@ class _GroupListState extends State<GroupList>
         floatingActionButton: FloatingActionButton(
             backgroundColor: APP_ACCENT,
             onPressed: () => navigatePage(context, className: GroupCreate()),
-            child: Icon(EvaIcons.edit2Outline, color: svGetScaffoldColor())),
+            child: Icon(EvaIcons.editOutline, color: svGetScaffoldColor())),
       ),
     );
   }

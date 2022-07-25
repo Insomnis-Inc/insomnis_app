@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:brokerstreet/custom_colors.dart';
 import 'package:brokerstreet/http/controllers/groupController.dart';
+import 'package:brokerstreet/screens/SVDashboardScreen.dart';
 import 'package:brokerstreet/toast.dart';
 import 'package:brokerstreet/utils/SVCommon.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class _GroupCreateState extends State<GroupCreate> {
         }
       });
 
-      Navigator.pop(context);
+      navigatePage(context, className: SVDashboardScreen());
     } catch (e) {
       print('More $e');
     }

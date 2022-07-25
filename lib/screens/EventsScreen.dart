@@ -120,7 +120,7 @@ class _EventsPageState extends State<EventsPage> {
           backgroundColor: APP_ACCENT,
           onPressed: () => navigatePage(context,
               className: SVAddPostFragment(isEvent: true)),
-          child: Icon(EvaIcons.edit2Outline, color: svGetScaffoldColor())),
+          child: Icon(EvaIcons.editOutline, color: svGetScaffoldColor())),
     );
   }
 }

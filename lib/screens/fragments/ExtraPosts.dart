@@ -292,7 +292,7 @@ class _ExtraPostsState extends State<ExtraPosts>
                           name: widget.title,
                           image: widget.image,
                           canAdd: widget.canAdd))),
-              child: Icon(EvaIcons.edit2Outline, color: svGetScaffoldColor()))
+              child: Icon(EvaIcons.editOutline, color: svGetScaffoldColor()))
           : Offstage(),
     );
   }

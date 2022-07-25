@@ -4,7 +4,7 @@ import 'package:brokerstreet/http/models/UserApi.dart';
 class Group {
   final String id;
   final String name;
-  bool isAdmin;
+  bool isMember;
   final String adminId;
   final String profilePic;
   final String memberCount;
@@ -16,7 +16,7 @@ class Group {
   Group(
       {required this.id,
       required this.name,
-      required this.isAdmin,
+      required this.isMember,
       required this.adminId,
       required this.memberCount,
       required this.profilePic,
@@ -27,15 +27,15 @@ class Group {
 
   factory Group.fromJson(Map<String, dynamic> json) {
     return Group(
-        id: json['group']['id'],
-        name: json['group']['name'],
-        adminId: json['group']['admin_id'],
-        createdAt: json['group']['created_at'],
-        coverPic: media_url + (json['group']['cover_pic'] ?? ''),
-        profilePic: media_url + (json['group']['profile_pic'] ?? ''),
-        memberCount: json['group']['member_count'],
-        isAdmin: json['is_admin'].toString() == '1' ? true : false,
-        admin: UserApi.fromJson(json['admin']));
+        id: json['group'][0]['id'],
+        name: json['group'][0]['name'],
+        adminId: json['group'][0]['admin_id'],
+        createdAt: json['group'][0]['created_at'],
+        coverPic: media_url + (json['group'][0]['cover_pic'] ?? ''),
+        profilePic: media_url + (json['group'][0]['profile_pic'] ?? ''),
+        memberCount: json['group'][0]['member_count'],
+        isMember: json['is_member'].toString() == '1' ? true : false,
+        admin: UserApi.fromJson(json['admin'][0]));
   }
 }
 
@@ -47,11 +47,13 @@ class GroupTile {
   final String memberCount;
   final String coverPic;
   final String createdAt;
+  bool isMember;
 
   GroupTile(
       {required this.id,
       required this.name,
       required this.adminId,
+      required this.isMember,
       required this.memberCount,
       required this.profilePic,
       required this.coverPic,
@@ -65,6 +67,7 @@ class GroupTile {
       createdAt: json['created_at'],
       coverPic: media_url + (json['cover_pic'] ?? ''),
       profilePic: media_url + (json['profile_pic'] ?? ''),
+      isMember: json['is_member'].toString() == '1' ? true : false,
       memberCount: json['member_count'],
     );
   }

@@ -19,13 +19,21 @@ import 'package:brokerstreet/utils/SVColors.dart';
 import 'package:brokerstreet/utils/SVCommon.dart';
 
 import '../../http/controllers/eventController.dart';
+import '../../http/controllers/groupController.dart';
 import '../../http/models/Extra.dart';
 
 class SVAddPostFragment extends StatefulWidget {
   final bool isExtra;
   final Extra? extra;
+  final bool isGroup;
+  final String? groupId;
   const SVAddPostFragment(
-      {Key? key, this.isEvent = false, this.extra, this.isExtra = false})
+      {Key? key,
+      this.isEvent = false,
+      this.isGroup = false,
+      this.groupId,
+      this.extra,
+      this.isExtra = false})
       : super(key: key);
   final bool isEvent;
 
@@ -78,7 +86,14 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
         // ),
         iconTheme: IconThemeData(color: context.iconColor),
         backgroundColor: context.cardColor,
-        title: Text(widget.isEvent ? 'New Event' : 'New Post',
+        title: Text(
+            widget.isEvent
+                ? 'New Event'
+                : widget.isGroup
+                    ? 'Group Post'
+                    : widget.isExtra
+                        ? widget.extra!.name!
+                        : 'New Post',
             style: boldTextStyle(size: 20)),
         elevation: 0,
         centerTitle: false,
@@ -99,16 +114,16 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
               if (attached == null) {
                 type = 'text';
               } else {
-                // String extension = attached!.path.split('.').last;
-                // print(extension);
-                // if (extension == 'png' ||
-                //     extension == 'jpg' ||
-                //     extension == 'gif') {
-                //   type = 'image';
-                // }
-                // if (extension == 'mp4' || extension == 'mkv') {
-                //   type = 'video';
-                // }
+                String extension = attached!.path.split('.').last;
+                print(extension);
+                if (extension == 'png' ||
+                    extension == 'jpg' ||
+                    extension == 'gif') {
+                  type = 'image';
+                }
+                if (extension == 'mp4') {
+                  type = 'video';
+                }
               }
 
               // showToast("", context)
@@ -123,7 +138,24 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
                           attached: attached)
                       .then((res) {
                     if (res) {
-                      showSuccessToast("Post created", context);
+                      showSuccessToast("Event created", context);
+                      return;
+                    } else {
+                      showToast("Connection error", context);
+                      return;
+                    }
+                  });
+                } else if (widget.isGroup) {
+                  //
+
+                  groupPostCreate(
+                          type: type,
+                          groupId: widget.groupId!,
+                          text: _textEditingController.text,
+                          attached: attached)
+                      .then((res) {
+                    if (res) {
+                      showSuccessToast("Group Post created", context);
                       return;
                     } else {
                       showToast("Connection error", context);

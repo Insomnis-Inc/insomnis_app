@@ -1,4 +1,7 @@
 import 'package:brokerstreet/http/models/Group.dart';
+import 'package:brokerstreet/screens/fragments/SVAddPostFragment.dart';
+import 'package:brokerstreet/toast.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:brokerstreet/screens/profile/components/SVProfileHeaderComponent.dart';
@@ -15,7 +18,8 @@ import '../../home/components/SVPostComponent.dart';
 
 class SVGroupProfileScreen extends StatefulWidget {
   final String groupId;
-  SVGroupProfileScreen(this.groupId);
+  final bool isMember;
+  SVGroupProfileScreen(this.groupId, this.isMember);
 
   @override
   State<SVGroupProfileScreen> createState() => _SVGroupProfileScreenState();
@@ -33,14 +37,31 @@ class _SVGroupProfileScreenState extends State<SVGroupProfileScreen>
     });
   }
 
+  late bool isMember;
+
   init() async {
     myId = await retrieveId();
+  }
+
+  _joinOrLeaveGroup(bool _isMember) {
+    setState(() {
+      isMember = !_isMember;
+    });
+    if (_isMember) {
+      leaveGroup(widget.groupId)
+          .then((value) => showToast("you are out of the group", context));
+    } else {
+      //
+      joinGroup(widget.groupId)
+          .then((value) => showToast("you are in the group", context));
+    }
   }
 
   @override
   void initState() {
     _group = singleGroup(widget.groupId);
     _posts = groupPosts(widget.groupId);
+    isMember = widget.isMember;
     init();
     super.initState();
     afterBuildCreated(() {
@@ -108,6 +129,7 @@ class _SVGroupProfileScreenState extends State<SVGroupProfileScreen>
                 );
               }
 
+              isMember = snapshot.data!.isMember;
               return Column(
                 children: [
                   // SVProfileHeaderComponent(User) must,
@@ -251,9 +273,9 @@ class _SVGroupProfileScreenState extends State<SVGroupProfileScreen>
                         AppButton(
                           shapeBorder:
                               RoundedRectangleBorder(borderRadius: radius(4)),
-                          text: 'Join Group',
+                          text: isMember ? 'Leave Group' : 'Join Group',
                           textStyle: boldTextStyle(color: Colors.white),
-                          onTap: () {},
+                          onTap: () => _joinOrLeaveGroup(isMember),
                           elevation: 0,
                           color: SVAppColorPrimary,
                           width: context.width() - 64,
@@ -327,6 +349,13 @@ class _SVGroupProfileScreenState extends State<SVGroupProfileScreen>
               );
             }),
       ),
+      floatingActionButton: isMember
+          ? FloatingActionButton(
+              backgroundColor: APP_ACCENT,
+              onPressed: () => navigatePage(context,
+                  className: SVAddPostFragment(isGroup: true)),
+              child: Icon(EvaIcons.editOutline, color: svGetScaffoldColor()))
+          : Offstage(),
     );
   }
 
