@@ -32,7 +32,8 @@ class ExtraPosts extends StatefulWidget {
   State<ExtraPosts> createState() => _ExtraPostsState();
 }
 
-class _ExtraPostsState extends State<ExtraPosts> {
+class _ExtraPostsState extends State<ExtraPosts>
+    with AutomaticKeepAliveClientMixin {
   // List<SVSearchModel> list = [];
   // List<SVSearchModel> tags = [];
   late Future<List<Post?>> _posts;
@@ -65,6 +66,7 @@ class _ExtraPostsState extends State<ExtraPosts> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var v16 = width / 20;
@@ -294,4 +296,7 @@ class _ExtraPostsState extends State<ExtraPosts> {
           : Offstage(),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

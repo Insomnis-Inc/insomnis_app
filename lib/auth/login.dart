@@ -37,46 +37,6 @@ class _LoginState extends State<Login> {
     //         null;
   }
 
-  _googleSignIn() async {
-    setState(() {
-      _loading2 = true;
-    });
-    try {
-      UserCredential _userCredential = await signInWithGoogle();
-    } catch (e) {
-      print('########### GSIGN: ${e.toString()} ##############');
-      showErrorToast(
-          "Problem signing in with Google, check your connection", context);
-      setState(() {
-        _loading2 = false;
-      });
-      return;
-    }
-    //todo go ahead check if account exists then show him so he can be a seller
-    User? user = FirebaseAuth.instance.currentUser;
-    // await Provider.of<AuthProvider>(context, listen: false)
-    //     .login(user.email, route);
-    // userLogIn();
-    await userLogIn(user!.email!)
-        .then((value) => route(value, "Check your connection & try again"));
-    if (_loginError) {
-      showToast("Please create Account", context);
-      setState(() {
-        _loading2 = false;
-      });
-      return;
-      // if (result.contains('404')) {
-      // new user
-      // register.fName = user.displayName;
-      // register.lName = "_";
-      // register.email = user.email;
-      // register.phone = user.phoneNumber ?? '_';
-      // register.password = '_';
-      // await Provider.of<AuthProvider>(context, listen: false)
-      //     .newRegistration(register, route);
-    }
-  }
-
   _signIn() async {
     setState(() {
       _loading = true;
@@ -195,76 +155,76 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: v16),
-                  child: GestureDetector(
-                    // onTap: () => _loading2
-                    //     ? null
-                    //     : Platform.isIOS
-                    //         ? _appleSignIn()
-                    //         : _googleSignIn(),
-                    onTap: () => _loading2 ? null : _googleSignIn(),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: v16, vertical: v16 * 0.8),
-                      margin: EdgeInsets.only(right: v16 * 1.4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        // color: darken(Colors.white, 0.08),
-                        color: _loading2
-                            ? APP_GREY.withOpacity(0.7)
-                            : Platform.isIOS
-                                ? REAL_BLACK
-                                : Color(0xffDD4B39).withOpacity(0.7),
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _loading2
-                                ? CircularProgressIndicator(color: APP_ACCENT)
-                                : Image.asset(
-                                    Platform.isIOS
-                                        ? 'assets/images/apple.png'
-                                        : 'assets/images/google.png',
-                                    color: REAL_WHITE,
-                                    width: v16 * 1.5,
-                                  ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: v16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 3),
-                        width: v16 * 4,
-                        height: 1,
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(2)),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: v16),
-                        child: Text("or log in with", style: normalTextStyle),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 3),
-                        width: v16 * 4,
-                        height: 1,
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(2)),
-                      ),
-                    ],
-                  ),
-                ),
+                // Container(
+                //   margin: EdgeInsets.only(top: v16),
+                //   child: GestureDetector(
+                //     // onTap: () => _loading2
+                //     //     ? null
+                //     //     : Platform.isIOS
+                //     //         ? _appleSignIn()
+                //     //         : _googleSignIn(),
+                //     onTap: () => _loading2 ? null : _googleSignIn(),
+                //     child: Container(
+                //       padding: EdgeInsets.symmetric(
+                //           horizontal: v16, vertical: v16 * 0.8),
+                //       margin: EdgeInsets.only(right: v16 * 1.4),
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(8),
+                //         // color: darken(Colors.white, 0.08),
+                //         color: _loading2
+                //             ? APP_GREY.withOpacity(0.7)
+                //             : Platform.isIOS
+                //                 ? REAL_BLACK
+                //                 : Color(0xffDD4B39).withOpacity(0.7),
+                //       ),
+                //       child: Center(
+                //         child: Row(
+                //           mainAxisSize: MainAxisSize.min,
+                //           children: [
+                //             _loading2
+                //                 ? CircularProgressIndicator(color: APP_ACCENT)
+                //                 : Image.asset(
+                //                     Platform.isIOS
+                //                         ? 'assets/images/apple.png'
+                //                         : 'assets/images/google.png',
+                //                     color: REAL_WHITE,
+                //                     width: v16 * 1.5,
+                //                   ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Container(
+                //   margin: EdgeInsets.only(top: v16),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       Container(
+                //         margin: EdgeInsets.only(top: 3),
+                //         width: v16 * 4,
+                //         height: 1,
+                //         decoration: BoxDecoration(
+                //             color: Colors.black,
+                //             borderRadius: BorderRadius.circular(2)),
+                //       ),
+                //       Container(
+                //         padding: EdgeInsets.symmetric(horizontal: v16),
+                //         child: Text("or log in with", style: normalTextStyle),
+                //       ),
+                //       Container(
+                //         margin: EdgeInsets.only(top: 3),
+                //         width: v16 * 4,
+                //         height: 1,
+                //         decoration: BoxDecoration(
+                //             color: Colors.black,
+                //             borderRadius: BorderRadius.circular(2)),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 // Container(
                 //   margin: EdgeInsets.only(top: v16),
                 //   child: Text("Email", style: normalTextStyle),
@@ -360,19 +320,19 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: v16 * 1.5, bottom: v16 * 2),
-                  child: InkWell(
-                    onTap: () => navigatePage(context, className: Register()),
-                    child: Text(
-                      "Create Account",
-                      style: normalTextStyle.copyWith(
-                        color: LIGHT_BLUE,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ),
+                // Container(
+                //   margin: EdgeInsets.only(top: v16 * 1.5, bottom: v16 * 2),
+                //   child: InkWell(
+                //     onTap: () => navigatePage(context, className: Register()),
+                //     child: Text(
+                //       "Create Account",
+                //       style: normalTextStyle.copyWith(
+                //         color: LIGHT_BLUE,
+                //         decoration: TextDecoration.underline,
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ],

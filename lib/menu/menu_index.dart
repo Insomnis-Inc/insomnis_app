@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:brokerstreet/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:brokerstreet/http/models/UserApi.dart';
@@ -11,25 +12,31 @@ import '../http/controllers/userController.dart';
 import 'edit_profile_menu.dart';
 
 class MenuIndex extends StatefulWidget {
-  const MenuIndex(this.id, {Key? key}) : super(key: key);
-  final String id;
+  const MenuIndex(this.myId, {Key? key}) : super(key: key);
+  final String myId;
   @override
   _MenuIndexState createState() => _MenuIndexState();
 }
 
 class _MenuIndexState extends State<MenuIndex> {
   late Future<UserApi?> _user;
+  late String myId;
+
+  init() async {
+    myId = widget.myId;
+    _user = userProfile(myId);
+  }
 
   @override
   void initState() {
-    _user = userProfile(widget.id);
+    init();
     setStatusBarColor(Colors.transparent);
     super.initState();
   }
 
   Future<void> _onRefresh() async {
-    var res = userProfile(widget.id);
-    print(widget.id);
+    var res = userProfile(myId);
+
     setState(() {
       _user = res;
     });

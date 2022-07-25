@@ -1,8 +1,17 @@
 import 'dart:io';
 
+import 'package:brokerstreet/auth/login.dart';
 import 'package:brokerstreet/custom_colors.dart';
+import 'package:brokerstreet/main.dart';
+import 'package:brokerstreet/toast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+
+import '../http/controllers/userController.dart';
+import '../screens/EASelectHashtagScreen.dart';
+import 'UsernameScreen.dart';
+import 'google_signin.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -13,7 +22,88 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen>
     with AutomaticKeepAliveClientMixin {
-  bool _loginWithGoogle = false, _signUpWithGoogle = false;
+  bool _loginWithGoogle = false, _signUpWithGoogle = false, _loginError = false;
+
+  _googleSignIn() async {
+    setState(() {
+      _loginWithGoogle = true;
+    });
+    try {
+      UserCredential _userCredential = await signInWithGoogle();
+    } catch (e) {
+      print('########### GSIGN: ${e.toString()} ##############');
+      showErrorToast(
+          "Problem signing in with Google, check your connection", context);
+      setState(() {
+        _loginWithGoogle = false;
+      });
+      return;
+    }
+    //todo go ahead check if account exists then show him so he can be a seller
+    User? user = FirebaseAuth.instance.currentUser;
+    // await Provider.of<AuthProvider>(context, listen: false)
+    //     .login(user.email, route);
+    // userLogIn();
+    saveVerified(true);
+    await userLogIn(user!.email!)
+        .then((value) => route(value, "Check your connection & try again"));
+    if (_loginError) {
+      showToast("Please create Account", context);
+      setState(() {
+        _loginWithGoogle = false;
+      });
+      return;
+    }
+  }
+
+  _googleSignUp() async {
+    setState(() {
+      _signUpWithGoogle = true;
+    });
+    try {
+      UserCredential _userCredential = await signInWithGoogle();
+    } catch (e) {
+      print('########### GSIGN: ${e.toString()} ##############');
+      showErrorToast(
+          "Problem signing in with Google, check your connection", context);
+      setState(() {
+        _signUpWithGoogle = false;
+      });
+      return;
+    }
+    //todo go ahead check if account exists then show him so he can be a seller
+    User? user = FirebaseAuth.instance.currentUser;
+    // await Provider.of<AuthProvider>(context, listen: false)
+    //     .login(user.email, route);
+    // userLogIn();
+    saveVerified(true);
+
+    navigatePage(context, className: UsernameScreen(user!.email!));
+
+    // await userLogIn(user!.email!)
+    //     .then((value) => route(value, "Check your connection & try again"));
+    if (_loginError) {
+      showToast("Please create Account", context);
+      setState(() {
+        _signUpWithGoogle = false;
+      });
+      return;
+    }
+  }
+
+  route(bool isRoute, String errorMessage) async {
+    if (isRoute) {
+      // await Provider.of<ProfileProvider>(context, listen: false)
+      //     .getUserInfo(context);
+      navigatePage(context, className: EASelectHashtagScreen());
+    } else {
+      // showErrorToast(errorMessage, context);
+      setState(() {
+        _loginError = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -79,48 +169,58 @@ class _AuthScreenState extends State<AuthScreen>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 //
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: v16, vertical: v16 * 0.8),
-                                  margin: EdgeInsets.only(
-                                      right: v16 * 2, left: v16),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    // color: darken(Colors.white, 0.08),
-                                    color: _loginWithGoogle
-                                        ? APP_GREY.withOpacity(0.7)
-                                        : Platform.isIOS
-                                            ? REAL_BLACK
-                                            : Color(0xffDD4B39)
-                                                .withOpacity(0.7),
-                                  ),
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        _loginWithGoogle
-                                            ? CircularProgressIndicator(
-                                                color: APP_ACCENT)
-                                            : Image.asset(
-                                                Platform.isIOS
-                                                    ? 'assets/images/apple.png'
-                                                    : 'assets/images/google.png',
-                                                color: REAL_WHITE,
-                                                width: v16 * 1.5,
-                                              ),
-                                      ],
+                                InkWell(
+                                  onTap: () =>
+                                      _loginWithGoogle ? null : _googleSignIn(),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: v16, vertical: v16 * 0.8),
+                                    margin: EdgeInsets.only(
+                                        right: v16 * 2, left: v16),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      // color: darken(Colors.white, 0.08),
+                                      color: _loginWithGoogle
+                                          ? APP_GREY.withOpacity(0.7)
+                                          : Platform.isIOS
+                                              ? REAL_BLACK
+                                              : Color(0xffDD4B39)
+                                                  .withOpacity(0.7),
+                                    ),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          _loginWithGoogle
+                                              ? CircularProgressIndicator(
+                                                  color: APP_ACCENT)
+                                              : Image.asset(
+                                                  Platform.isIOS
+                                                      ? 'assets/images/apple.png'
+                                                      : 'assets/images/google.png',
+                                                  color: REAL_WHITE,
+                                                  width: v16 * 1.5,
+                                                ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
 
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: v16 * 2, left: v16, right: v16 * 2),
-                                  child: normalButton(
-                                    v16: v16,
-                                    title: "Log In With Email/Password",
-                                    bgColor: APP_ACCENT,
-                                    // callback: null,
+                                InkWell(
+                                  onTap: () =>
+                                      navigatePage(context, className: Login()),
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                        top: v16 * 2,
+                                        left: v16,
+                                        right: v16 * 2),
+                                    child: normalButton(
+                                      v16: v16,
+                                      title: "Log In With Email/Password",
+                                      bgColor: APP_ACCENT,
+                                      // callback: null,
+                                    ),
                                   ),
                                 ),
 
@@ -140,36 +240,40 @@ class _AuthScreenState extends State<AuthScreen>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 //
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: v16, vertical: v16 * 0.8),
-                                  margin: EdgeInsets.only(
-                                      right: v16 * 2, left: v16),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    // color: darken(Colors.white, 0.08),
-                                    color: _signUpWithGoogle
-                                        ? APP_GREY.withOpacity(0.7)
-                                        : Platform.isIOS
-                                            ? REAL_BLACK
-                                            : Color(0xffDD4B39)
-                                                .withOpacity(0.7),
-                                  ),
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        _signUpWithGoogle
-                                            ? CircularProgressIndicator(
-                                                color: APP_ACCENT)
-                                            : Image.asset(
-                                                Platform.isIOS
-                                                    ? 'assets/images/apple.png'
-                                                    : 'assets/images/google.png',
-                                                color: REAL_WHITE,
-                                                width: v16 * 1.5,
-                                              ),
-                                      ],
+                                InkWell(
+                                  onTap: () =>
+                                      _loginWithGoogle ? null : _googleSignUp(),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: v16, vertical: v16 * 0.8),
+                                    margin: EdgeInsets.only(
+                                        right: v16 * 2, left: v16),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      // color: darken(Colors.white, 0.08),
+                                      color: _signUpWithGoogle
+                                          ? APP_GREY.withOpacity(0.7)
+                                          : Platform.isIOS
+                                              ? REAL_BLACK
+                                              : Color(0xffDD4B39)
+                                                  .withOpacity(0.7),
+                                    ),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          _signUpWithGoogle
+                                              ? CircularProgressIndicator(
+                                                  color: APP_ACCENT)
+                                              : Image.asset(
+                                                  Platform.isIOS
+                                                      ? 'assets/images/apple.png'
+                                                      : 'assets/images/google.png',
+                                                  color: REAL_WHITE,
+                                                  width: v16 * 1.5,
+                                                ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

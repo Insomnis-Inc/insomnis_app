@@ -15,17 +15,17 @@ import '../models/Group.dart';
 
 Dio dio = Dio();
 
-Future<List<Group?>> allGroups() async {
+Future<List<GroupTile?>> allGroups() async {
   var response = await http.get(Uri.parse('$API_URL/groups'));
   print("User: ${response.statusCode}");
 
-  List<Group?> results = [];
+  List<GroupTile?> results = [];
   try {
     var jsonD = jsonDecode(response.body.replaceAll('|', ''));
     print(jsonD.toString());
 
     for (var item in jsonD['data']) {
-      results.add(Group.fromJson(
+      results.add(GroupTile.fromJson(
         item,
       ));
     }
@@ -35,7 +35,7 @@ Future<List<Group?>> allGroups() async {
   return results;
 }
 
-Future<List<Group?>> userGroups() async {
+Future<List<GroupTile?>> userGroups() async {
   var response =
       await http.get(Uri.parse('$API_URL/groups/' + await retrieveId()));
   print("User: ${response.statusCode}");
@@ -43,10 +43,10 @@ Future<List<Group?>> userGroups() async {
   var jsonD = jsonDecode(response.body);
   print(jsonD.toString());
 
-  List<Group?> results = [];
+  List<GroupTile?> results = [];
   try {
     for (var item in jsonD['data']) {
-      results.add(Group.fromJson(
+      results.add(GroupTile.fromJson(
         item,
       ));
     }
@@ -56,38 +56,38 @@ Future<List<Group?>> userGroups() async {
   return results;
 }
 
-Future<bool> postCreate(
-    {required String type, required String text, File? attached}) async {
-  Dio _dio = Dio();
-  Map<String, dynamic> inputs = {
-    'text': text,
-    'attached':
-        attached != null ? await MultipartFile.fromFile(attached.path) : '',
-    'type': type
-  };
-  print('test 4400');
-  FormData formData = FormData.fromMap(inputs);
+// Future<bool> postCreate(
+//     {required String type, required String text, File? attached}) async {
+//   Dio _dio = Dio();
+//   Map<String, dynamic> inputs = {
+//     'text': text,
+//     'attached':
+//         attached != null ? await MultipartFile.fromFile(attached.path) : '',
+//     'type': type
+//   };
+//   print('test 4400');
+//   FormData formData = FormData.fromMap(inputs);
 
-  try {
-    var response = await _dio.post(
-        '$API_URL/posts/' + await retrieveId() + '/create',
-        data: formData);
-    print("CODE: ${response.statusCode}");
-    if (response.statusCode == 200) {
-      var jsonData = json.decode(response.toString().replaceAll('|', ''));
-      print(jsonData);
-      return true;
-    } else {
-      // print("CODE: ${response.statusCode}");
-      return false;
-    }
-  } catch (e) {
-    print("Error nana : ${e.toString()}");
-    return false;
-  }
+//   try {
+//     var response = await _dio.post(
+//         '$API_URL/posts/' + await retrieveId() + '/create',
+//         data: formData);
+//     print("CODE: ${response.statusCode}");
+//     if (response.statusCode == 200) {
+//       var jsonData = json.decode(response.toString().replaceAll('|', ''));
+//       print(jsonData);
+//       return true;
+//     } else {
+//       // print("CODE: ${response.statusCode}");
+//       return false;
+//     }
+//   } catch (e) {
+//     print("Error nana : ${e.toString()}");
+//     return false;
+//   }
 
-  // print("DATA: ${response.data}");
-}
+//   // print("DATA: ${response.data}");
+// }
 
 Future<bool> groupDelete(String groupId) async {
   Dio dio = Dio();

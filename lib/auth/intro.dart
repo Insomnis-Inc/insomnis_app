@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:animate_do/animate_do.dart';
+import 'package:brokerstreet/auth/AuthScreen.dart';
 import 'package:brokerstreet/auth/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -153,7 +154,8 @@ class _IntroPageState extends State<IntroPage> {
                     Container(
                       width: width * 0.7,
                       child: InkWell(
-                        onTap: () => navigatePage(context, className: Login()),
+                        onTap: () =>
+                            navigatePage(context, className: AuthScreen()),
                         child: normalIntroButton(
                             v16: v16, bgColor: APP_ACCENT, title: 'Login '),
                       ),
@@ -163,7 +165,7 @@ class _IntroPageState extends State<IntroPage> {
                       width: width * 0.7,
                       child: InkWell(
                         onTap: () =>
-                            navigatePage(context, className: Register()),
+                            navigatePage(context, className: AuthScreen()),
                         child: outlineIntroButton(
                             v16: v16, textColor: REAL_WHITE, title: "Sign Up"),
                       ),

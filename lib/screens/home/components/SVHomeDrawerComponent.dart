@@ -19,6 +19,7 @@ import 'package:brokerstreet/utils/SVCommon.dart';
 import '../../../http/models/Extra.dart';
 import '../../auth/screens/SVSignInScreen.dart';
 import '../../fragments/SavedPosts.dart';
+import '../../fragments/groupsList.dart';
 
 class SVHomeDrawerComponent extends StatefulWidget {
   @override
@@ -107,16 +108,18 @@ class _SVHomeDrawerComponentState extends State<SVHomeDrawerComponent> {
                   finish(context);
                   logOutCustom(context);
                   navigatePage(context, className: IntroPage());
-                } else if (selectedIndex == options.length - 2) {
+                } else if (selectedIndex == options.length - 3) {
                   finish(context);
                   navigatePage(context, className: SavedPosts());
+                } else if (selectedIndex == options.length - 2) {
+                  finish(context);
+                  navigatePage(context, className: MenuIndex(id));
                 } else if (selectedIndex == 0) {
                   finish(context);
                   const EventsPage().launch(context);
                 } else if (selectedIndex == 1) {
                   finish(context);
-                  SVGroupProfileScreen().launch(context);
-                  // MenuIndex(id).launch(context);
+                  navigatePage(context, className: GroupList());
                 } else if (selectedIndex > 1) {
                   finish(context);
                   ExtraPosts(

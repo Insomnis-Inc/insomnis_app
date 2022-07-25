@@ -43,6 +43,8 @@ List<Extra> getDrawerOptions() {
       name: 'Lost & Found'));
 
   list.add(Extra(image: 'assets/images/ribbon.png', name: 'Bookmarks'));
+
+  list.add(Extra(image: 'assets/images/settings.png', name: 'Settings'));
   // list.add(Extra(image: 'images/socialv/icons/ic_Document.png', name: 'Forums'));
   // list.add(Extra(
   //     image: 'images/socialv/icons/ic_Send.png', name: 'Lost & Found'));

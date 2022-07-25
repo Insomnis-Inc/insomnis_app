@@ -12,6 +12,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:brokerstreet/store/AppStore.dart';
 import 'package:brokerstreet/utils/AppTheme.dart';
+import 'lab.dart';
 import 'screens/SVDashboardScreen.dart';
 
 AppStore appStore = AppStore();
@@ -60,10 +61,10 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-        home: AuthScreen()
-        // home: status
-        //     ? (isVerified ? SVDashboardScreen() : Register(verify: true))
-        //     : IntroPage(),
+        // home: GroupLab()
+        home: status
+            ? (isVerified ? SVDashboardScreen() : Register(verify: true))
+            : IntroPage(),
       ),
     );
   }
