@@ -23,6 +23,7 @@ class _EventsPageState extends State<EventsPage> {
   late List<String> _types;
   late String myId;
 
+  final PageController _controller = PageController(initialPage: 0);
   Future<void> _onRefresh() async {
     var res = events();
     setState(() {
@@ -46,26 +47,27 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   int selectedTab = 0;
+  _gotoPage(int page) {
+    _controller.animateToPage(page,
+        duration: Duration(milliseconds: 400), curve: Curves.linear);
+  }
 
   getTabContainer() {
-    for (var i = 0; i < _types.length; i++) {
-      if (selectedTab == i) {
-        // return SVForumTopicComponent(isFavTab: false);
-        return EventFuture(_types[i]);
-      }
-    }
-    // if (selectedTab == 0) {
-    //   // return SVForumTopicComponent(isFavTab: false);
-    //   return PostFuture(1);
-    // } else if (selectedTab == 1) {
-    //   // return SVForumRepliesComponent();
-    //   return PostFuture(2);
-    // } else if (selectedTab == 2) {
-    //   // return Offstage();
-    //   return PostFuture(3);
-    // } else
-    //   // return SVForumTopicComponent(isFavTab: true);
-    //   return PostFuture(1);
+    return PageView(
+      scrollDirection: Axis.horizontal,
+      onPageChanged: (i) {
+        setState(() {
+          selectedTab = i;
+        });
+      },
+      controller: _controller,
+      children: <Widget>[
+        EventFuture(_types[0]),
+        EventFuture(_types[1]),
+        EventFuture(_types[2]),
+        EventFuture(_types[3]),
+      ],
+    );
   }
 
   @override
@@ -101,6 +103,7 @@ class _EventsPageState extends State<EventsPage> {
                   onTap: () {
                     selectedTab = index;
                     setState(() {});
+                    _gotoPage(index);
                   },
                   elevation: 0,
                   color: selectedTab == index
@@ -110,61 +113,6 @@ class _EventsPageState extends State<EventsPage> {
               },
             ),
             Expanded(child: getTabContainer())
-            // Expanded(
-            //   child: FutureBuilder<List<Post?>>(
-            //     future: _posts,
-            //     builder: (context, AsyncSnapshot<List<Post?>> snapshot) {
-            //       if (snapshot.connectionState == ConnectionState.none ||
-            //           snapshot.connectionState == ConnectionState.waiting) {
-            //         return Container(
-            //           height: height * 0.7,
-            //           width: width,
-            //           child: Center(
-            //               child: Padding(
-            //             padding: EdgeInsets.all(v16),
-            //             child: CircularProgressIndicator(
-            //               color: APP_ACCENT,
-            //             ),
-            //           )),
-            //         );
-            //       }
-
-            //       if (snapshot.data == null || snapshot.data?.length == 0) {
-            //         return Container(
-            //           height: height * 0.8,
-            //           width: width,
-            //           child: Center(
-            //               child: Column(
-            //             mainAxisSize: MainAxisSize.min,
-            //             children: [
-            //               Text(
-            //                 'Nothing to show',
-            //                 style: TextStyle(fontSize: 16, color: APP_ACCENT),
-            //               ).paddingOnly(bottom: 8),
-            //               InkWell(
-            //                   onTap: () => _onRefresh(),
-            //                   child: Container(
-            //                     height: 64,
-            //                     margin:
-            //                         EdgeInsets.symmetric(horizontal: v16 * 4),
-            //                     child: normalButton(
-            //                         v16: v16 * 0.7,
-            //                         bgColor: APP_ACCENT,
-            //                         title: "refresh"),
-            //                   )),
-            //             ],
-            //           )),
-            //         );
-            //       }
-
-            //       return ListView(
-            //         children: [
-            //           SVPostComponent(snapshot.data!, myId),
-            //         ],
-            //       );
-            //     },
-            //   ),
-            // ),
           ],
         ),
       ),

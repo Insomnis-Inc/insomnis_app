@@ -1,6 +1,8 @@
 import 'package:brokerstreet/http/models/Group.dart';
+import 'package:brokerstreet/screens/fragments/groupCreate.dart';
 import 'package:brokerstreet/utils/SVCommon.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -56,7 +58,7 @@ class _GroupListState extends State<GroupList>
           automaticallyImplyLeading: true,
           bottom: TabBar(
             isScrollable: true,
-            labelColor: REAL_WHITE,
+            labelColor: APP_ACCENT,
             unselectedLabelColor: APP_GREY,
             tabs: [
               Tab(
@@ -208,14 +210,7 @@ class _GroupListState extends State<GroupList>
         ),
         floatingActionButton: FloatingActionButton(
             backgroundColor: APP_ACCENT,
-            onPressed: () => navigatePage(context,
-                className: SVAddPostFragment(
-                    isExtra: true,
-                    extra: Extra(
-                        id: widget.extraId,
-                        name: widget.title,
-                        image: widget.image,
-                        canAdd: widget.canAdd))),
+            onPressed: () => navigatePage(context, className: GroupCreate()),
             child: Icon(EvaIcons.edit2Outline, color: svGetScaffoldColor())),
       ),
     );

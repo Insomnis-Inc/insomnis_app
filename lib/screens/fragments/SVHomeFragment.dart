@@ -41,6 +41,7 @@ class _SVHomeFragmentState extends State<SVHomeFragment>
   late String id;
 
   List<String> tabList = ['For you', 'Bars', 'Restaurants'];
+  final PageController _pageController = PageController(initialPage: 0);
 
   int selectedTab = 0;
   String searchText = '';
@@ -55,23 +56,42 @@ class _SVHomeFragmentState extends State<SVHomeFragment>
   }
 
   Widget getTabContainer() {
-    if (selectedTab == 0) {
-      // return SVForumTopicComponent(isFavTab: false);
-      return PostFuture(1);
-    } else if (selectedTab == 1) {
-      // return SVForumRepliesComponent();
-      return PostFuture(2);
-    } else if (selectedTab == 2) {
-      // return Offstage();
-      return PostFuture(3);
-    } else
-      // return SVForumTopicComponent(isFavTab: true);
-      return PostFuture(1);
+    return PageView(
+      scrollDirection: Axis.horizontal,
+      onPageChanged: (i) {
+        setState(() {
+          selectedTab = i;
+        });
+      },
+      controller: _pageController,
+      children: <Widget>[
+        PostFuture(1),
+        PostFuture(2),
+        PostFuture(3),
+      ],
+    );
+    // if (selectedTab == 0) {
+    //   // return SVForumTopicComponent(isFavTab: false);
+    //   return PostFuture(1);
+    // } else if (selectedTab == 1) {
+    //   // return SVForumRepliesComponent();
+    //   return PostFuture(2);
+    // } else if (selectedTab == 2) {
+    //   // return Offstage();
+    //   return PostFuture(3);
+    // } else
+    //   // return SVForumTopicComponent(isFavTab: true);
+    //   return PostFuture(1);
   }
 
   initId() async {
     id = await retrieveId();
     print('IDDDD: $id');
+  }
+
+  _gotoPage(int page) {
+    _pageController.animateToPage(page,
+        duration: Duration(milliseconds: 400), curve: Curves.linear);
   }
 
   @override
@@ -304,6 +324,7 @@ class _SVHomeFragmentState extends State<SVHomeFragment>
                               onTap: () {
                                 selectedTab = index;
                                 setState(() {});
+                                _gotoPage(index);
                               },
                               elevation: 0,
                               color: selectedTab == index

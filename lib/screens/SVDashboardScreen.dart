@@ -24,7 +24,29 @@ class _SVDashboardScreenState extends State<SVDashboardScreen> {
   int selectedIndex = 0;
   late String myId;
 
+  // final PageController _controller = PageController(initialPage: 0);
+
   Widget getFragment() {
+    // return PageView(
+    //   scrollDirection: Axis.horizontal,
+    //   onPageChanged: (i) {
+    //     if (i == 2) {
+    //       selectedIndex = 0;
+    //       setState(() {});
+    //       SVAddPostFragment().launch(context);
+    //     }
+    //     setState(() {
+    //       selectedIndex = i;
+    //     });
+    //   },
+    //   controller: _controller,
+    //   children: <Widget>[
+    //     SVHomeFragment(),
+    //     SVSearchFragment(),
+    //     SVNotificationFragment(),
+    //     SVMessagesFragment(),
+    //   ],
+    // );
     if (selectedIndex == 0) {
       return SVHomeFragment();
     } else if (selectedIndex == 1) {

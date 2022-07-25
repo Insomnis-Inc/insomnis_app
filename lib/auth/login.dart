@@ -60,18 +60,18 @@ class _LoginState extends State<Login> {
       // User user = FirebaseAuth.instance.currentUser;
       bool _verified = await _verify(user!);
       print("After verify check");
-      if (_verified) {
-        // Provider.of<AuthProvider>(context, listen: false)
-        //     .saveUserEmail(_email, _password);
-        // await Provider.of<AuthProvider>(context, listen: false)
-        //     .login(_email, route);
-        print("to server check");
-        await userLogIn(_email)
-            .then((value) => route(value, "Check your connection & try again"));
-      } else {
-        // go to your email and come back
-        // leave this empty
-      }
+      // if (_verified) {
+      // Provider.of<AuthProvider>(context, listen: false)
+      //     .saveUserEmail(_email, _password);
+      // await Provider.of<AuthProvider>(context, listen: false)
+      //     .login(_email, route);
+      print("to server check");
+      await userLogIn(_email)
+          .then((value) => route(value, "Check your connection & try again"));
+      // } else {
+      //   // go to your email and come back
+      //   // leave this empty
+      // }
     } on FirebaseAuthException catch (e) {
       // print(e.toString());
       if (e.code == 'user-not-found') {

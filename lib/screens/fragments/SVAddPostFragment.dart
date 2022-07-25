@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:brokerstreet/screens/SVDashboardScreen.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -68,6 +69,13 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
     return Scaffold(
       backgroundColor: context.cardColor,
       appBar: AppBar(
+        // leading: InkWell(
+        //   onTap: () => SVDashboardScreen().launch(context),
+        //   child: Icon(
+        //     Icons.arrow_back,
+        //     color: REAL_BLACK,
+        //   ),
+        // ),
         iconTheme: IconThemeData(color: context.iconColor),
         backgroundColor: context.cardColor,
         title: Text(widget.isEvent ? 'New Event' : 'New Post',
