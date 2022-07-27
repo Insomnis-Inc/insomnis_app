@@ -127,7 +127,7 @@ class _EditNameBioLocationState extends State<EditNameBioLocation> {
                 autofocus: false,
                 decoration: InputDecoration(
                     focusColor: APP_PRIMARY,
-                    hintText: "Enter your business location",
+                    hintText: "Enter your location",
                     prefixIcon: Icon(Icons.location_on),
                     border: OutlineInputBorder(
                       gapPadding: 2,
@@ -149,7 +149,7 @@ class _EditNameBioLocationState extends State<EditNameBioLocation> {
                 autofocus: false,
                 decoration: InputDecoration(
                     focusColor: APP_PRIMARY,
-                    hintText: "Outline what you sell in less than 3 lines",
+                    // hintText: "Outline what you sell in less than 3 lines",
                     prefixIcon: Icon(Icons.store),
                     border: OutlineInputBorder(
                       gapPadding: 2,

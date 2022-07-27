@@ -122,7 +122,8 @@ Future<bool> userLogIn(String email) async {
 
 Future<UserApi?> userProfile(String id) async {
   print("User: here");
-  var response = await http.get(Uri.parse('$API_URL/users/$id'));
+  var response = await http
+      .get(Uri.parse('$API_URL/users/$id/profile/' + await retrieveId()));
 
   print("User: after");
   print("User: ${response.statusCode}");
@@ -131,7 +132,7 @@ Future<UserApi?> userProfile(String id) async {
     var jsonD = jsonDecode(response.body.replaceAll('|', ''));
     print(jsonD.toString());
     return UserApi.fromJson(
-      jsonD['data'],
+      jsonD['data'][0],
     );
   } catch (e) {
     print("Parse Error: $e");

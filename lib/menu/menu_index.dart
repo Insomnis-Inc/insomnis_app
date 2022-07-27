@@ -48,25 +48,25 @@ class _MenuIndexState extends State<MenuIndex> {
     double width = MediaQuery.of(context).size.width;
     double v16 = width / 20;
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        backgroundColor: svGetScaffoldColor(),
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: APP_ACCENT,
-          ),
-        ),
-        centerTitle: true,
-        elevation: 2,
-        title: Text(
-          "Edit Profile",
-          style: normalTextStyle.copyWith(color: APP_ACCENT),
-        ),
-      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: true,
+      //   backgroundColor: svGetScaffoldColor(),
+      //   leading: GestureDetector(
+      //     onTap: () {
+      //       Navigator.pop(context);
+      //     },
+      //     child: Icon(
+      //       Icons.arrow_back_ios,
+      //       color: APP_ACCENT,
+      //     ),
+      //   ),
+      //   centerTitle: true,
+      //   elevation: 2,
+      //   title: Text(
+      //     "Edit Profile",
+      //     style: normalTextStyle.copyWith(color: APP_ACCENT),
+      //   ),
+      // ),
       body: Container(
         width: width,
         height: height,

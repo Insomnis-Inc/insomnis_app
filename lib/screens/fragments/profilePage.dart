@@ -29,7 +29,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>
     with TickerProviderStateMixin {
-  bool isFollowing = false;
+  late bool isFollowing;
   late UserApi user;
   late TabController _tabController;
   late Future<List<Post?>> _posts;
@@ -53,6 +53,11 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   void initState() {
     user = widget.user;
+    if (!widget.mine) {
+      isFollowing = widget.user.isFollowing;
+    } else {
+      isFollowing = false;
+    }
     _tabController = TabController(length: 2, vsync: this);
     _posts = userPosts(user.id);
     _likedPosts = userLikedPosts(user.id);

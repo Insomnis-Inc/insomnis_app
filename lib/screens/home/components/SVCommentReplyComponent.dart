@@ -37,6 +37,14 @@ class _SVCommentReplyComponentState extends State<SVCommentReplyComponent> {
         mainAxisSize: MainAxisSize.min,
         children: [
           //Divider(indent: 16, endIndent: 16, height: 20),
+          Container(
+            padding: EdgeInsets.only(
+              bottom: 8,
+              top: 4,
+              left: 16,
+            ),
+            child: Text("Reply to comment"),
+          ),
           Row(
             children: [
               // 16.width,

@@ -224,16 +224,16 @@ class _AuthScreenState extends State<AuthScreen>
                                   ),
                                 ),
 
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: v16 * 2, left: v16, right: v16 * 2),
-                                  child: outlineButton(
-                                    v16: v16,
-                                    title: "Log In With Phone Number",
-                                    textColor: APP_ACCENT,
-                                    // callback: null,
-                                  ),
-                                ),
+                                // Container(
+                                //   margin: EdgeInsets.only(
+                                //       top: v16 * 2, left: v16, right: v16 * 2),
+                                //   child: outlineButton(
+                                //     v16: v16,
+                                //     title: "Log In With Phone Number",
+                                //     textColor: APP_ACCENT,
+                                //     // callback: null,
+                                //   ),
+                                // ),
                               ],
                             ),
                             Column(
@@ -289,16 +289,16 @@ class _AuthScreenState extends State<AuthScreen>
                                   ),
                                 ),
 
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: v16 * 2, left: v16, right: v16 * 2),
-                                  child: outlineButton(
-                                    v16: v16,
-                                    title: "Sign Up With Phone Number",
-                                    textColor: APP_ACCENT,
-                                    // callback: null,
-                                  ),
-                                ),
+                                // Container(
+                                //   margin: EdgeInsets.only(
+                                //       top: v16 * 2, left: v16, right: v16 * 2),
+                                //   child: outlineButton(
+                                //     v16: v16,
+                                //     title: "Sign Up With Phone Number",
+                                //     textColor: APP_ACCENT,
+                                //     // callback: null,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ],

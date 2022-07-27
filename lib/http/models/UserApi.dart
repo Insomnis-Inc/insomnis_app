@@ -52,16 +52,16 @@ class UserApi {
         cover: media_url + json['cover_pic'],
         // url: json['url'],
         // active: json['active'] == '1' ? true : false,
-        verified: json['verified'] == '1' ? true : false,
+        verified: json['verified'].toString() == '1' ? true : false,
         postCount: json['post_count'] ?? '1',
-        followersCount: json['followers'] ?? '0',
-        followingCount: json['following'] ?? '0',
+        followersCount: json['followers'].toString(),
+        followingCount: json['following'].toString(),
         bio: json['bio'],
         address: json['address'],
         // mutualFriends: json['details']['mutual_friends_count'].toString(),
         // likesCount: json['details']['likes_count'],
-        canFollow: json['can_follow'] == '1' ? true : false,
-        isFollowingMe: json['is_following_me'] == 1 ? true : false,
-        isFollowing: json['is_following'] == 1 ? true : false);
+        canFollow: json['you_follow'].toString() == '1' ? false : true,
+        isFollowingMe: json['is_following_me'].toString() == '1' ? true : false,
+        isFollowing: json['you_follow'].toString() == '1' ? true : false);
   }
 }

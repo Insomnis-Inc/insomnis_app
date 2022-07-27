@@ -13,6 +13,7 @@ import 'package:brokerstreet/screens/fragments/SVSearchFragment.dart';
 import 'package:brokerstreet/utils/SVCommon.dart';
 import 'package:brokerstreet/main.dart';
 
+import '../custom_colors.dart';
 import 'fragments/SVMessagesFragment.dart';
 
 class SVDashboardScreen extends StatefulWidget {
@@ -153,6 +154,17 @@ class _SVDashboardScreenState extends State<SVDashboardScreen> {
         },
         currentIndex: selectedIndex,
       ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: APP_ACCENT,
+          onPressed: () => navigatePage(context,
+              className: selectedIndex == 4
+                  ? SVMessagesFragment()
+                  : SVAddPostFragment()),
+          child: Icon(
+              selectedIndex == 4
+                  ? EvaIcons.messageSquareOutline
+                  : EvaIcons.editOutline,
+              color: REAL_WHITE)),
     );
   }
 }
