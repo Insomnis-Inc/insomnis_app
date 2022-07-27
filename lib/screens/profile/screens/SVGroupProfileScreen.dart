@@ -354,7 +354,7 @@ class _SVGroupProfileScreenState extends State<SVGroupProfileScreen>
               backgroundColor: APP_ACCENT,
               onPressed: () => navigatePage(context,
                   className: SVAddPostFragment(isGroup: true)),
-              child: Icon(EvaIcons.editOutline, color: svGetScaffoldColor()))
+              child: Icon(EvaIcons.editOutline, color: REAL_WHITE))
           : Offstage(),
     );
   }

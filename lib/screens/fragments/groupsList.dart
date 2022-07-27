@@ -213,7 +213,7 @@ class _GroupListState extends State<GroupList>
         floatingActionButton: FloatingActionButton(
             backgroundColor: APP_ACCENT,
             onPressed: () => navigatePage(context, className: GroupCreate()),
-            child: Icon(EvaIcons.editOutline, color: svGetScaffoldColor())),
+            child: Icon(EvaIcons.editOutline, color: REAL_WHITE)),
       ),
     );
   }

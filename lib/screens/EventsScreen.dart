@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:brokerstreet/screens/fragments/SVAddPostFragment.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -86,31 +87,76 @@ class _EventsPageState extends State<EventsPage> {
       body: Container(
         child: Column(
           children: [
-            HorizontalList(
-              spacing: 0,
-              padding: EdgeInsets.all(16),
-              itemCount: _types.length,
-              itemBuilder: (context, index) {
-                return AppButton(
-                  margin: EdgeInsets.only(right: v16),
-                  shapeBorder: RoundedRectangleBorder(borderRadius: radius(8)),
-                  text: _types[index],
-                  textStyle: boldTextStyle(
+            Stack(
+              children: [
+                HorizontalList(
+                  spacing: 0,
+                  padding: EdgeInsets.all(16),
+                  itemCount: _types.length,
+                  itemBuilder: (context, index) {
+                    return AppButton(
+                      margin: EdgeInsets.only(right: v16),
+                      shapeBorder:
+                          RoundedRectangleBorder(borderRadius: radius(8)),
+                      text: _types[index],
+                      textStyle: boldTextStyle(
+                          color: selectedTab == index
+                              ? Colors.white
+                              : svGetBodyColor(),
+                          size: 14),
+                      onTap: () {
+                        selectedTab = index;
+                        setState(() {});
+                        _gotoPage(index);
+                      },
+                      elevation: 0,
                       color: selectedTab == index
-                          ? Colors.white
-                          : svGetBodyColor(),
-                      size: 14),
-                  onTap: () {
-                    selectedTab = index;
-                    setState(() {});
-                    _gotoPage(index);
+                          ? SVAppColorPrimary
+                          : svGetScaffoldColor(),
+                    );
                   },
-                  elevation: 0,
-                  color: selectedTab == index
-                      ? SVAppColorPrimary
-                      : svGetScaffoldColor(),
-                );
-              },
+                ),
+                Positioned(
+                    left: 20,
+                    top: 24,
+                    child: FadeInLeft(
+                      child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                              color: APP_ACCENT,
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Icon(
+                            EvaIcons.arrowIosBackOutline,
+                            color: REAL_WHITE,
+                            size: 22,
+                          )).onTap(() {
+                        selectedTab = 0;
+                        setState(() {});
+                        _gotoPage(0);
+                      }),
+                    )).visible(selectedTab == 3),
+                Positioned(
+                    right: 20,
+                    top: 24,
+                    child: FadeInRight(
+                      child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                              color: APP_ACCENT,
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Icon(
+                            EvaIcons.arrowIosForwardOutline,
+                            color: REAL_WHITE,
+                            size: 22,
+                          )).onTap(() {
+                        selectedTab = 3;
+                        setState(() {});
+                        _gotoPage(3);
+                      }),
+                    )).visible(selectedTab == 0),
+              ],
             ),
             Expanded(child: getTabContainer())
           ],
@@ -120,7 +166,7 @@ class _EventsPageState extends State<EventsPage> {
           backgroundColor: APP_ACCENT,
           onPressed: () => navigatePage(context,
               className: SVAddPostFragment(isEvent: true)),
-          child: Icon(EvaIcons.editOutline, color: svGetScaffoldColor())),
+          child: Icon(EvaIcons.editOutline, color: REAL_WHITE)),
     );
   }
 }
