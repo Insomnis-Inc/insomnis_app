@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:brokerstreet/getx/getxCommentController.dart';
+import 'package:get/get.dart';
 import 'dart:io';
 import 'package:brokerstreet/auth/AuthScreen.dart';
 import 'package:brokerstreet/auth/intro.dart';
@@ -25,6 +26,7 @@ const TutorialKey = 'isNewForTutorial';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
+  GetxCommentController().onInit();
   await initialize();
   await Firebase.initializeApp();
   await Hive.initFlutter();
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return Observer(
-      builder: (_) => MaterialApp(
+      builder: (_) => GetMaterialApp(
         scrollBehavior: SBehavior(),
         navigatorKey: navigatorKey,
         title: 'Insomnis',

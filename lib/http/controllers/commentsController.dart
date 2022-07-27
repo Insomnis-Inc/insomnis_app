@@ -33,8 +33,7 @@ Future<List<Comment?>> postComments(String postId) async {
   return results;
 }
 
-Future<List<Comment?>> commentComments(
-    {required String commentId, required String userId}) async {
+Future<List<Comment?>> commentComments(String commentId) async {
   var response = await http.get(
       Uri.parse('$API_URL/comments/$commentId/check/' + await retrieveId()));
   print("User: ${response.statusCode}");
@@ -113,6 +112,7 @@ Future<bool> commentUpdate({required String text, required String id}) async {
 }
 
 Future<bool> commentLike(String commentId) async {
+  print("comment liked");
   var response =
       await dio.get('$API_URL/comments/$commentId/like/' + await retrieveId());
   print("CODE: ${response.statusCode.toString()}");
@@ -124,6 +124,7 @@ Future<bool> commentLike(String commentId) async {
 }
 
 Future<bool> commentDislike(String commentId) async {
+  print("comment disliked");
   var response = await dio
       .get('$API_URL/comments/$commentId/dislike/' + await retrieveId());
   print("CODE: ${response.statusCode.toString()}");

@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_is_empty
 
+import 'package:brokerstreet/getx/getxCommentController.dart';
 import 'package:flutter/material.dart';
 import 'package:brokerstreet/custom_colors.dart';
 import 'package:brokerstreet/http/controllers/commentsController.dart';
 import 'package:brokerstreet/http/models/Comment.dart';
+import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:brokerstreet/models/SVCommentModel.dart';
 import 'package:brokerstreet/screens/home/components/SVCommentComponent.dart';
@@ -19,12 +21,15 @@ class SVCommentScreen extends StatefulWidget {
   State<SVCommentScreen> createState() => _SVCommentScreenState();
 }
 
-class _SVCommentScreenState extends State<SVCommentScreen> {
+class _SVCommentScreenState extends State<SVCommentScreen>
+    with AutomaticKeepAliveClientMixin {
   // List<SVCommentModel> commentList = [];
   late Future<List<Comment?>> _comments;
 
   @override
   void initState() {
+    final GetxCommentController c = Get.put(GetxCommentController());
+    c.resetCommentReply();
     // commentList = getComments();
     _comments = postComments(widget.postId);
     super.initState();
@@ -49,6 +54,7 @@ class _SVCommentScreenState extends State<SVCommentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var v16 = width / 20;
@@ -56,7 +62,7 @@ class _SVCommentScreenState extends State<SVCommentScreen> {
       backgroundColor: context.cardColor,
       appBar: AppBar(
         backgroundColor: context.cardColor,
-        iconTheme: IconThemeData(color: context.iconColor),
+        iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color!),
         title: Text('Comments', style: boldTextStyle(size: 20)),
         elevation: 0,
         centerTitle: true,
@@ -67,8 +73,8 @@ class _SVCommentScreenState extends State<SVCommentScreen> {
         ],
       ),
       body: Container(
-        height: context.height(),
-        width: context.width(),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: Stack(
           // alignment: Alignment.bottomCenter,
           children: [
@@ -134,4 +140,8 @@ class _SVCommentScreenState extends State<SVCommentScreen> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
