@@ -22,6 +22,7 @@
 
    <application
         android:label="Insomnis"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

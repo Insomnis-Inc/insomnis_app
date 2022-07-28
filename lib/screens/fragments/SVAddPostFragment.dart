@@ -234,7 +234,9 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
                   ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: buildGridView(),
+                  child: attached != null
+                      ? Text(attached!.absolute.path, style: boldTextStyle())
+                      : Offstage(),
                 ),
               ],
             ),
@@ -308,10 +310,10 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
                           ),
                           InkWell(
                             onTap: () async {
-                              final XFile? photo = await _picker.pickVideo(
+                              final XFile? video = await _picker.pickVideo(
                                   source: ImageSource.gallery);
                               attached =
-                                  photo != null ? File(photo.path) : null;
+                                  video != null ? File(video.path) : null;
                             },
                             child: Container(
                               // height: 62,

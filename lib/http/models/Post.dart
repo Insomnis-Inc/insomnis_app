@@ -28,10 +28,10 @@ class Post {
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
         id: json['id'],
-        text: json['text'],
+        text: json['text'] ?? '',
         type: json['type'],
         createdAt: json['created_at'],
-        attached: media_url + (json['attached'] ?? ''),
+        attached: json['attached'] ?? '',
         comments: json['comments'],
         liked: json['liked'].toString() == '1' ? true : false,
         saved: json['saved'].toString() == '1' ? true : false,

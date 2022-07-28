@@ -31,8 +31,8 @@ class Group {
         name: json['group'][0]['name'],
         adminId: json['group'][0]['admin_id'],
         createdAt: json['group'][0]['created_at'],
-        coverPic: media_url + (json['group'][0]['cover_pic'] ?? ''),
-        profilePic: media_url + (json['group'][0]['profile_pic'] ?? ''),
+        coverPic: json['group'][0]['cover_pic'] ?? '',
+        profilePic: json['group'][0]['profile_pic'] ?? '',
         memberCount: json['group'][0]['member_count'],
         isMember: json['is_member'].toString() == '1' ? true : false,
         admin: UserApi.fromJson(json['admin'][0]));
@@ -65,8 +65,8 @@ class GroupTile {
       name: json['name'],
       adminId: json['admin_id'],
       createdAt: json['created_at'],
-      coverPic: media_url + (json['cover_pic'] ?? ''),
-      profilePic: media_url + (json['profile_pic'] ?? ''),
+      coverPic: json['cover_pic'] ?? '',
+      profilePic: json['profile_pic'] ?? '',
       isMember: json['is_member'].toString() == '1' ? true : false,
       memberCount: json['member_count'],
     );
