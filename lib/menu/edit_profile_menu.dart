@@ -48,7 +48,7 @@ class _EditProfileMenuState extends State<EditProfileMenu> {
         child: ListView(
           children: <Widget>[
             ListTile(
-              title: Text("Edit Name, bio"),
+              title: Text("Edit Userame"),
               onTap: () => Navigator.push(
                   context,
                   CupertinoPageRoute(

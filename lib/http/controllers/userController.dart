@@ -217,7 +217,6 @@ Future<bool> userUnfollow({required String id}) async {
 /* == NAME BIO LOCATION == */
 Future<bool> userNameBioLocation({
   required String name,
-  required String myId,
   required String address,
   required String bio,
 }) async {
@@ -233,9 +232,10 @@ Future<bool> userNameBioLocation({
     FormData formData = FormData.fromMap(inputs);
 
     try {
-      var response =
-          await dio.post('$API_URL/users/$myId/update', data: formData);
-      // print("CODE: ${response.statusCode}");
+      var response = await dio.post(
+          '$API_URL/users/' + await retrieveId() + '/update',
+          data: formData);
+      print("CODE: ${response.statusCode}");
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.toString());
         return true;
@@ -244,11 +244,11 @@ Future<bool> userNameBioLocation({
         return false;
       }
     } catch (e) {
-      // print("Error: ${e.toString()}");
+      print("Error: ${e.toString()}");
       return false;
     }
   } catch (e) {
-    // print("ST: ${e.toString()}");
+    print("ST: ${e.toString()}");
     return false;
   }
 
@@ -331,10 +331,7 @@ Future<bool> userCurrency({
 
 /* == SIGN UP == */
 Future<bool> userPhotos(
-    {required String myId,
-    File? coverPic,
-    required bool isCover,
-    File? profilePic}) async {
+    {File? coverPic, required bool isCover, File? profilePic}) async {
   try {
     Dio dio = new Dio();
 
@@ -347,10 +344,10 @@ Future<bool> userPhotos(
     try {
       var response = await dio.post(
           isCover
-              ? '$API_URL/users/$myId/cover_photo'
-              : '$API_URL/users/$myId/profile_photo',
+              ? '$API_URL/users/' + await retrieveId() + '/cover_photo'
+              : '$API_URL/users/' + await retrieveId() + '/profile_photo',
           data: formData);
-      // print("CODE: ${response.statusCode}");
+      print("CODE: ${response.statusCode}");
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.toString());
         return true;

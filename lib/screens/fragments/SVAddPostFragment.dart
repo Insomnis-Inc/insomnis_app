@@ -131,6 +131,7 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
 
               try {
                 if (widget.isEvent) {
+                  print("event call");
                   eventCreate(
                           type: type,
                           eventType: eventType,
@@ -235,7 +236,7 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: attached != null
-                      ? Text(attached!.absolute.path, style: boldTextStyle())
+                      ? Text("media uploaded", style: boldTextStyle())
                       : Offstage(),
                 ),
               ],
@@ -262,8 +263,11 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
                               // Capture a photo
                               final XFile? photo = await _picker.pickImage(
                                   source: ImageSource.camera);
-                              attached =
-                                  photo != null ? File(photo.path) : null;
+
+                              setState(() {
+                                attached =
+                                    photo != null ? File(photo.path) : null;
+                              });
                             },
                             child: Container(
                               // height: 62,
@@ -287,8 +291,10 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
                             onTap: () async {
                               final XFile? photo = await _picker.pickImage(
                                   source: ImageSource.gallery);
-                              attached =
-                                  photo != null ? File(photo.path) : null;
+                              setState(() {
+                                attached =
+                                    photo != null ? File(photo.path) : null;
+                              });
                             },
                             child: Container(
                               // height: 62,
@@ -312,8 +318,10 @@ class _SVAddPostFragmentState extends State<SVAddPostFragment> {
                             onTap: () async {
                               final XFile? video = await _picker.pickVideo(
                                   source: ImageSource.gallery);
-                              attached =
-                                  video != null ? File(video.path) : null;
+                              setState(() {
+                                attached =
+                                    video != null ? File(video.path) : null;
+                              });
                             },
                             child: Container(
                               // height: 62,

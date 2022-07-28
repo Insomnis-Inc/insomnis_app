@@ -13,6 +13,7 @@ import 'package:brokerstreet/utils/SVCommon.dart';
 import 'package:brokerstreet/utils/SVConstants.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import '../../../http/controllers/SavedPostController.dart';
 
 class SVPostComponent extends StatefulWidget {
@@ -225,7 +226,7 @@ class _VideoComponentState extends State<VideoComponent> {
     });
     _controller.setLooping(true);
     _controller.initialize().then((_) => setState(() {}));
-    _controller.play();
+    // _controller.play();
   }
 
   @override
@@ -242,164 +243,179 @@ class _VideoComponentState extends State<VideoComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 16),
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      decoration: BoxDecoration(
-          borderRadius: radius(SVAppCommonRadius), color: context.cardColor),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: widget.posts.creator.avatar,
-                    height: 56,
-                    width: 56,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Image.asset(
-                      "assets/images/avatar.png",
+    return VisibilityDetector(
+      key: Key(widget.posts.id),
+      onVisibilityChanged: (visibilityInfo) {
+        var visiblePercentage = visibilityInfo.visibleFraction * 100;
+        if (visiblePercentage > 80) {
+          _controller.play();
+        }
+        if (visiblePercentage < 20) {
+          _controller.pause();
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        decoration: BoxDecoration(
+            borderRadius: radius(SVAppCommonRadius), color: context.cardColor),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl: widget.posts.creator.avatar,
                       height: 56,
                       width: 56,
                       fit: BoxFit.cover,
-                    ),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  ).cornerRadiusWithClipRRect(SVAppCommonRadius).onTap(() {
-                    if (!widget.mine) {
-                      SVProfileFragment(widget.posts.creator.id)
-                          .launch(context);
-                    }
-                  }),
-                  12.width,
-                  Text(widget.mine ? 'You' : widget.posts.creator.displayname,
-                          style: boldTextStyle())
-                      .onTap(() {
-                    if (!widget.mine) {
-                      SVProfileFragment(widget.posts.creator.id)
-                          .launch(context);
-                    }
-                  }),
-                  4.width,
-                  if (widget.posts.creator.verified)
-                    Image.asset('images/socialv/icons/ic_TickSquare.png',
-                            height: 14, width: 14, fit: BoxFit.cover)
+                      placeholder: (context, url) => Image.asset(
+                        "assets/images/avatar.png",
+                        height: 56,
+                        width: 56,
+                        fit: BoxFit.cover,
+                      ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ).cornerRadiusWithClipRRect(SVAppCommonRadius).onTap(() {
+                      if (!widget.mine) {
+                        SVProfileFragment(widget.posts.creator.id)
+                            .launch(context);
+                      }
+                    }),
+                    12.width,
+                    Text(widget.mine ? 'You' : widget.posts.creator.displayname,
+                            style: boldTextStyle())
                         .onTap(() {
                       if (!widget.mine) {
                         SVProfileFragment(widget.posts.creator.id)
                             .launch(context);
                       }
                     }),
-                ],
-              ).paddingSymmetric(horizontal: 16),
-              Row(
-                children: [
-                  Text(widget.posts.createdAt,
-                      style: secondaryTextStyle(
-                          color: svGetBodyColor(), size: 12)),
-                  IconButton(
-                      onPressed: () {
-                        if (widget.posts.saved) {
-                          setState(() {
-                            widget.posts.saved = !widget.posts.saved;
-                          });
-                          unsavePost(widget.posts.id);
+                    4.width,
+                    if (widget.posts.creator.verified)
+                      Image.asset('images/socialv/icons/ic_TickSquare.png',
+                              height: 14, width: 14, fit: BoxFit.cover)
+                          .onTap(() {
+                        if (!widget.mine) {
+                          SVProfileFragment(widget.posts.creator.id)
+                              .launch(context);
+                        }
+                      }),
+                  ],
+                ).paddingSymmetric(horizontal: 16),
+                Row(
+                  children: [
+                    Text(widget.posts.createdAt,
+                        style: secondaryTextStyle(
+                            color: svGetBodyColor(), size: 12)),
+                    IconButton(
+                        onPressed: () {
+                          if (widget.posts.saved) {
+                            setState(() {
+                              widget.posts.saved = !widget.posts.saved;
+                            });
+                            unsavePost(widget.posts.id);
+                          } else {
+                            setState(() {
+                              widget.posts.saved = !widget.posts.saved;
+                            });
+                            savePost(widget.posts.id);
+                          }
+                        },
+                        icon: Icon(widget.posts.saved
+                            ? Icons.bookmark
+                            : Icons.bookmark_border_outlined))
+                  ],
+                ).paddingSymmetric(horizontal: 8),
+              ],
+            ),
+            16.height,
+            widget.posts.text.isNotEmpty
+                ? svRobotoText(
+                        text: widget.posts.text, textAlign: TextAlign.start)
+                    .paddingSymmetric(horizontal: 16)
+                : Offstage(),
+            widget.posts.text.isNotEmpty ? 16.height : Offstage(),
+            if (widget.posts.type == 'video')
+              AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: <Widget>[
+                    VideoPlayer(_controller),
+                    _ControlsOverlay(controller: _controller),
+                    VideoProgressIndicator(_controller, allowScrubbing: true),
+                  ],
+                ),
+              ).cornerRadiusWithClipRRect(SVAppCommonRadius).center(),
+            // chewieController != null &&
+            //         chewieController!.videoPlayerController.value.isInitialized
+            //     ? Chewie(
+            //         controller: chewieController!,
+            //       ).cornerRadiusWithClipRRect(SVAppCommonRadius).center()
+            //     : Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: const [
+            //           CircularProgressIndicator(),
+            //           SizedBox(height: 20),
+            //           // Text('Loading'),
+            //         ],
+            //       ).center(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      'images/socialv/icons/ic_Chat.png',
+                      height: 22,
+                      width: 22,
+                      fit: BoxFit.cover,
+                      color: context.iconColor,
+                    ).onTap(() {
+                      SVCommentScreen(widget.posts.id).launch(context);
+                    },
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent),
+                    IconButton(
+                      icon: widget.posts.liked.validate()
+                          ? Image.asset(
+                              'images/socialv/icons/ic_HeartFilled.png',
+                              height: 20,
+                              width: 22,
+                              fit: BoxFit.fill)
+                          : Image.asset(
+                              'images/socialv/icons/ic_Heart.png',
+                              height: 22,
+                              width: 22,
+                              fit: BoxFit.cover,
+                              color: context.iconColor,
+                            ),
+                      onPressed: () async {
+                        bool isliked = widget.posts.liked.validate();
+                        widget.posts.liked = !widget.posts.liked.validate();
+                        setState(() {});
+                        if (!isliked) {
+                          await postLike(widget.posts.id);
                         } else {
-                          setState(() {
-                            widget.posts.saved = !widget.posts.saved;
-                          });
-                          savePost(widget.posts.id);
+                          await postDislike(widget.posts.id);
                         }
                       },
-                      icon: Icon(widget.posts.saved
-                          ? Icons.bookmark
-                          : Icons.bookmark_border_outlined))
-                ],
-              ).paddingSymmetric(horizontal: 8),
-            ],
-          ),
-          16.height,
-          widget.posts.text.isNotEmpty
-              ? svRobotoText(
-                      text: widget.posts.text, textAlign: TextAlign.start)
-                  .paddingSymmetric(horizontal: 16)
-              : Offstage(),
-          widget.posts.text.isNotEmpty ? 16.height : Offstage(),
-          if (widget.posts.type == 'video')
-            AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  VideoPlayer(_controller),
-                  _ControlsOverlay(controller: _controller),
-                  VideoProgressIndicator(_controller, allowScrubbing: true),
-                ],
-              ),
-            ).cornerRadiusWithClipRRect(SVAppCommonRadius).center(),
-          // chewieController != null &&
-          //         chewieController!.videoPlayerController.value.isInitialized
-          //     ? Chewie(
-          //         controller: chewieController!,
-          //       ).cornerRadiusWithClipRRect(SVAppCommonRadius).center()
-          //     : Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: const [
-          //           CircularProgressIndicator(),
-          //           SizedBox(height: 20),
-          //           // Text('Loading'),
-          //         ],
-          //       ).center(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'images/socialv/icons/ic_Chat.png',
-                    height: 22,
-                    width: 22,
-                    fit: BoxFit.cover,
-                    color: context.iconColor,
-                  ).onTap(() {
-                    SVCommentScreen(widget.posts.id).launch(context);
-                  },
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent),
-                  IconButton(
-                    icon: widget.posts.liked.validate()
-                        ? Image.asset('images/socialv/icons/ic_HeartFilled.png',
-                            height: 20, width: 22, fit: BoxFit.fill)
-                        : Image.asset(
-                            'images/socialv/icons/ic_Heart.png',
-                            height: 22,
-                            width: 22,
-                            fit: BoxFit.cover,
-                            color: context.iconColor,
-                          ),
-                    onPressed: () async {
-                      bool isliked = widget.posts.liked.validate();
-                      widget.posts.liked = !widget.posts.liked.validate();
-                      setState(() {});
-                      if (!isliked) {
-                        await postLike(widget.posts.id);
-                      } else {
-                        await postDislike(widget.posts.id);
-                      }
-                    },
-                  ),
-                ],
-              ),
-              Text('${widget.posts.comments.validate()} comments',
-                      style: secondaryTextStyle(color: svGetBodyColor()))
-                  .onTap(() {
-                SVCommentScreen(widget.posts.id).launch(context);
-              }),
-            ],
-          ).paddingSymmetric(horizontal: 16),
-        ],
+                    ),
+                  ],
+                ),
+                Text('${widget.posts.comments.validate()} comments',
+                        style: secondaryTextStyle(color: svGetBodyColor()))
+                    .onTap(() {
+                  SVCommentScreen(widget.posts.id).launch(context);
+                }),
+              ],
+            ).paddingSymmetric(horizontal: 16),
+          ],
+        ),
       ),
     );
   }

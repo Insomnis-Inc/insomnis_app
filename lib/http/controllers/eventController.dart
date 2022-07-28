@@ -19,6 +19,7 @@ Future<bool> eventCreate(
     required String eventType,
     File? attached}) async {
   Dio dio = Dio();
+  print('event method');
   Map<String, dynamic> inputs = {
     'text': text,
     'event_type': eventType,
@@ -32,7 +33,7 @@ Future<bool> eventCreate(
   try {
     var response =
         await dio.post('$API_URL/events/' + await retrieveId(), data: formData);
-    print("CODE: ${response.statusCode}");
+    print("#############  Event Response: ${response.statusCode}");
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.toString());
       print(jsonData);

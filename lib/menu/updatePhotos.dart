@@ -13,6 +13,7 @@ import 'package:brokerstreet/utils/SVCommon.dart';
 
 import '../../main.dart';
 import '../custom_colors.dart';
+import '../screens/SVDashboardScreen.dart';
 import '../toast.dart';
 
 class UpdatePhotos extends StatefulWidget {
@@ -26,12 +27,10 @@ class UpdatePhotos extends StatefulWidget {
 class _UpdatePhotosState extends State<UpdatePhotos> {
   late File _profilePicFile, _coverPicFile;
   bool _profileUploaded = false, _coverUploaded = false;
-  late String _myId;
+
   @override
   void initState() {
     super.initState();
-    var _tokenBox = Hive.box(TokenBox);
-    _myId = _tokenBox.get("id");
   }
 
   final ImagePicker _picker = ImagePicker();
@@ -54,8 +53,7 @@ class _UpdatePhotosState extends State<UpdatePhotos> {
   onSent() async {
     showToast("Updating ", context);
     if (_coverUploaded) {
-      userPhotos(coverPic: _coverPicFile, isCover: true, myId: _myId)
-          .then((value) {
+      userPhotos(coverPic: _coverPicFile, isCover: true).then((value) {
         if (value) {
           showSuccessToast("Cover Photo Updated Successfully", context);
         } else {
@@ -66,8 +64,7 @@ class _UpdatePhotosState extends State<UpdatePhotos> {
     }
 
     if (_profileUploaded) {
-      userPhotos(isCover: false, profilePic: _profilePicFile, myId: _myId)
-          .then((value) {
+      userPhotos(isCover: false, profilePic: _profilePicFile).then((value) {
         if (value) {
           showSuccessToast("Profile Photo Updated Successfully", context);
         } else {
@@ -79,7 +76,7 @@ class _UpdatePhotosState extends State<UpdatePhotos> {
     // Navigator.pop(context);
     await Future.delayed(Duration(seconds: 3));
 
-    navigatePage(context, className: SVSplashScreen());
+    navigatePage(context, className: SVDashboardScreen());
   }
 
   @override

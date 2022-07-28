@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers
 
+import 'package:brokerstreet/screens/SVDashboardScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -25,12 +26,9 @@ class _EditNameBioLocationState extends State<EditNameBioLocation> {
       _usernameController,
       _addressController;
 
-  late String _myId;
   @override
   void initState() {
     super.initState();
-    var _tokenBox = Hive.box(TokenBox);
-    _myId = _tokenBox.get("id");
     initUser();
   }
 
@@ -47,7 +45,7 @@ class _EditNameBioLocationState extends State<EditNameBioLocation> {
 
     showToast("Updating ", context);
 
-    userNameBioLocation(name: username, myId: _myId, address: address, bio: bio)
+    userNameBioLocation(name: username, address: address, bio: bio)
         .then((value) {
       if (value) {
         showSuccessToast("Profile Updated Successfully", context);
@@ -60,7 +58,7 @@ class _EditNameBioLocationState extends State<EditNameBioLocation> {
     // Navigator.of(context).popUntil(ModalRoute.withName("/edit_product"));
     // Navigator.pop(context);
     Navigator.push(
-        context, CupertinoPageRoute(builder: (context) => SVSplashScreen()));
+        context, CupertinoPageRoute(builder: (context) => SVDashboardScreen()));
   }
 
   @override
@@ -113,6 +111,7 @@ class _EditNameBioLocationState extends State<EditNameBioLocation> {
                     )),
               ),
             ),
+
             Container(
               padding: EdgeInsets.only(top: v16),
               child: Text(
@@ -135,39 +134,47 @@ class _EditNameBioLocationState extends State<EditNameBioLocation> {
                     )),
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(top: v16),
-              child: Text(
-                "Bio",
-                style: normalTextStyle,
-              ),
-            ),
-            Container(
-              child: TextField(
-                controller: _bioController,
-                maxLines: 3,
-                autofocus: false,
-                decoration: InputDecoration(
-                    focusColor: APP_PRIMARY,
-                    // hintText: "Outline what you sell in less than 3 lines",
-                    prefixIcon: Icon(Icons.store),
-                    border: OutlineInputBorder(
-                      gapPadding: 2,
-                      borderSide: BorderSide(color: Colors.black, width: 2),
-                    )),
+            // Container(
+            //   padding: EdgeInsets.only(top: v16),
+            //   child: Text(
+            //     "Bio",
+            //     style: normalTextStyle,
+            //   ),
+            // ),
+            // Container(
+            //   child: TextField(
+            //     controller: _bioController,
+            //     maxLines: 3,
+            //     autofocus: false,
+            //     decoration: InputDecoration(
+            //         focusColor: APP_PRIMARY,
+            //         // hintText: "Outline what you sell in less than 3 lines",
+            //         prefixIcon: Icon(Icons.store),
+            //         border: OutlineInputBorder(
+            //           gapPadding: 2,
+            //           borderSide: BorderSide(color: Colors.black, width: 2),
+            //         )),
+            //   ),
+            // ),
+            InkWell(
+              onTap: () => onSent(),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: normalButton(
+                    v16: v16, bgColor: APP_ACCENT, title: "upload"),
               ),
             ),
           ],
         ),
       ),
-      floatingActionButton: InkWell(
-        onTap: () => onSent(),
-        child: Container(
-          height: 50,
-          width: v16 * 7,
-          child: normalButton(v16: v16, bgColor: APP_ACCENT, title: "Done"),
-        ),
-      ),
+      // floatingActionButton: InkWell(
+      //   onTap: () => onSent(),
+      //   child: Container(
+      //     height: 64,
+      //     width: v16 * 7,
+      //     child: normalButton(v16: v16, bgColor: APP_ACCENT, title: "upload"),
+      //   ),
+      // ),
     );
   }
 }
