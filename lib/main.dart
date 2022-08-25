@@ -13,6 +13,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:brokerstreet/store/AppStore.dart';
 import 'package:brokerstreet/utils/AppTheme.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'http/env.dart';
 import 'lab.dart';
 import 'screens/SVDashboardScreen.dart';
 
@@ -22,6 +24,9 @@ const UserRegBox = 'userReg';
 // box for everything else including country, currency, token
 const TokenBox = "token";
 const TutorialKey = 'isNewForTutorial';
+
+// APP key Onesignal
+//
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +38,7 @@ void main() async {
   await Hive.openBox(UserRegBox);
   await Hive.openBox(TokenBox);
   appStore.toggleDarkMode(value: await retrieveDarkMode());
+  await oneSignalSetup();
 
   bool status = await retrieveSignedIn();
   bool isVerified = await retrieveVerified();
@@ -93,6 +99,23 @@ class MyHttpOverrides extends HttpOverrides {
 //   box.put("token", token);
 //   box.put("signedIn", true);
 // }
+
+oneSignalSetup() async {
+  try {
+    await OneSignal.shared.setAppId(oneSignalAppId);
+  } catch (e) {
+    print('${e.toString()}');
+  }
+
+  OneSignal.shared.setNotificationWillShowInForegroundHandler(
+      (OSNotificationReceivedEvent? event) {
+    return event?.complete(event.notification);
+  });
+
+  OneSignal.shared.disablePush(false);
+  OneSignal.shared.consentGranted(true);
+  OneSignal.shared.requiresUserPrivacyConsent();
+}
 
 Future<String> retrieveId() async {
   var box = Hive.box(TokenBox);

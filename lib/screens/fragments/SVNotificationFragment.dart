@@ -12,6 +12,7 @@ import 'package:brokerstreet/screens/notification/components/SVRequestNotificati
 import 'package:brokerstreet/utils/SVCommon.dart';
 import 'package:brokerstreet/utils/SVConstants.dart';
 
+import '../../http/controllers/notificationController.dart';
 import '../../http/models/NotificationApi.dart';
 import '../notification/components/NotificationComponent.dart';
 
@@ -38,25 +39,25 @@ class _SVNotificationFragmentState extends State<SVNotificationFragment> {
     }
   }
 
-  // late Future<List<NotificationApi?>> _notifications;
+  late Future<List<NotificationApi?>> _notifications;
 
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
 
-  // Future<void> _onRefresh() async {
-  //   var res = notifications();
-  //   setState(() {
-  //     _notifications = res;
-  //   });
-  // }
+  Future<void> _onRefresh() async {
+    var res = notifications();
+    setState(() {
+      _notifications = res;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
 
-    // _notifications = notifications();
+    _notifications = notifications();
     afterBuildCreated(() {
       setStatusBarColor(svGetScaffoldColor());
     });
@@ -86,60 +87,62 @@ class _SVNotificationFragmentState extends State<SVNotificationFragment> {
           children: [
             Text('RECENT', style: boldTextStyle()).paddingAll(16),
             Divider(height: 0, indent: 16, endIndent: 16),
-            // Container(
-            //   padding: EdgeInsets.all(v16),
-            //   child: Text(
-            //     'No notifications yet',
-            //     style: TextStyle(color: APP_ACCENT),
-            //   ),
-            // ),
-            // FutureBuilder<List<NotificationApi?>>(
-            //   future: _notifications,
-            //   builder:
-            //       (context, AsyncSnapshot<List<NotificationApi?>> snapshot) {
-            //     if (snapshot.connectionState == ConnectionState.none ||
-            //         snapshot.connectionState == ConnectionState.waiting) {
-            //       return Container(
-            //         height: height * 0.7,
-            //         width: width,
-            //         child: Center(
-            //             child: Padding(
-            //           padding: EdgeInsets.all(v16),
-            //           child: CircularProgressIndicator(
-            //             color: APP_ACCENT,
-            //           ),
-            //         )),
-            //       );
-            //     }
-
-            //     if (snapshot.data == null || snapshot.data?.length == 0) {
             Container(
-              height: height * 0.8,
-              width: width,
-              child: Center(
-                  child: InkWell(
-                      // onTap: () => _onRefresh(),
-                      child: Container(
-                height: 64,
-                margin: EdgeInsets.symmetric(horizontal: v16 * 4),
-                child: normalButton(
-                    v16: v16, bgColor: APP_ACCENT, title: "refresh"),
-              ))),
+              padding: EdgeInsets.all(v16),
+              child: Text(
+                'No notifications yet',
+                style: TextStyle(color: APP_ACCENT),
+              ),
             ),
-            //     }
+            FutureBuilder<List<NotificationApi?>>(
+              future: _notifications,
+              builder:
+                  (context, AsyncSnapshot<List<NotificationApi?>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.none ||
+                    snapshot.connectionState == ConnectionState.waiting) {
+                  return Container(
+                    height: height * 0.7,
+                    width: width,
+                    child: Center(
+                        child: Padding(
+                      padding: EdgeInsets.all(v16),
+                      child: CircularProgressIndicator(
+                        color: APP_ACCENT,
+                      ),
+                    )),
+                  );
+                }
 
-            //     return Column(
-            //       children: snapshot.data!.map((e) {
-            //         return NotificationComponent(e!).onTap(() {
-            //           if (e.type == 'following') {
-            //             navigatePage(context,
-            //                 className: SVProfileFragment(e.notifier!.id));
-            //           }
-            //         });
-            //       }).toList(),
-            //     );
-            //   },
-            // ),
+                if (snapshot.data == null || snapshot.data?.length == 0) {
+                  return Container(
+                    height: height * 0.8,
+                    width: width,
+                    child: Center(
+                        child: InkWell(
+                            onTap: () => _onRefresh(),
+                            child: Container(
+                              height: 64,
+                              margin: EdgeInsets.symmetric(horizontal: v16 * 4),
+                              child: normalButton(
+                                  v16: v16,
+                                  bgColor: APP_ACCENT,
+                                  title: "refresh"),
+                            ))),
+                  );
+                }
+
+                return Column(
+                  children: snapshot.data!.map((e) {
+                    return NotificationComponent(e!).onTap(() {
+                      if (e.type == 'following') {
+                        navigatePage(context,
+                            className: SVProfileFragment(e.notifier!.id));
+                      }
+                    });
+                  }).toList(),
+                );
+              },
+            ),
             // Column(
             //   children: listToday.map((e) {
             //     return getNotificationComponent(
